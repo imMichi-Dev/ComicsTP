@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- //ICONS -->
+    <script src="https://kit.fontawesome.com/d3c573bd54.js" crossorigin="anonymous"></script>
+    <title>ComicsSearcher</title>
+</head>
+<body class="not-italic flex flex-col text-center w-full">
+    <header>
+        <nav class="bg-black text-slate-400">
+            <p class="font-bold">ADA COMICS</p>
+        </nav>
+    </header>
+    <main>
+        <div>
+            <img src="#" alt="coverImage">
+        </div>
+        <div class="m-10">
+            <div class="m-5">
+                <div class="flex justify-center w-full"
+                        <form class=" flex justify-center" action="">
+                            <div class="flex flex-col items-start w-1/2" >
+                                <label>Búsqueda</label>
+                                <input type="text" placeholder="Ingresa tu busqueda" class="w-full">
+                            </div>
+                            <div class="flex items-center w-1/2">
+                                <div class="px-8">
+                                    <label class="font-semibold text-slate-600">TIPO</label>
+                                    <select name="typeComic" id="typeComic" class="px-8">
+                                        <option class="font-semibold" value="comics">comics</option>
+                                    </select>
+                                </div>
+                                <div class="px-8">
+                                    <label class="font-semibold text-slate-600">ORDEN</label>
+                                    <select name="orderComic" id="orderComic" class="px-8">
+                                        <option class="font-semibold" value="a-z">a-z</option>
+                                    </select>
+                                </div>
+                                <button class="bg-black text-slate-400 p-2">Buscar</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+            <div>
+                <p class="flex font-semibold items-start">Resultados</p>
+                <p class="flex resultsNumber font-medium items-start"> # RESULTADOS</p>
+            </div>
+            <div class="comicCover m-5">
+                <div>
+                <img src="#" alt="comicCover">
+                </div>
+                <p class="comicTitle font-semibold"></p> 
+            </div>
+            <div class="characterCover m-5">
+                <!-- <div>
+                <img src="#" alt="characterCover">
+                <p class="characterTitle font-semibold"></p> 
+                </div> -->
+            </div>
+            <div class="m-5">
+                <button><i class="fa-solid fa-angles-left"></i></button>
+                <button><i class="fa-solid fa-angle-left"></i></button>
+                <button><i class="fa-solid fa-angle-right"></i></button>
+                <button><i class="fa-solid fa-angles-right"></i></button>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-black">
+        <p class="text-slate-400">Hecho con <i class="fa-solid fa-heart"></i> por majo jojo</p>
+    </footer>
+    <script src="javaScript.js"></script>
+</body>
+</html>
