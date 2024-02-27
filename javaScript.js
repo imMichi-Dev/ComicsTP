@@ -26,18 +26,22 @@ let datos = []
 
 async function getMarvelComics() {
     try {
-        const searchData =search ? `&nameStartsWidth=${search}` : ""
+        
+        const searchData = search ? `&${type = "characters" ? `name` : `title`}StartsWith=${search}` : ""
+        
         urlAPI =`https://gateway.marvel.com/v1/public/${type}?limit=20&ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}${searchData}`
         console.log("cambios aqui", urlAPI)
         const response = await fetch(urlAPI)
         const data = await response.json()
-        datos = data.data.results
+        datos = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
+        
     } catch (error) {
         console.log(error);
     }
     
-    // return data.data.results   .filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
-    renderComics()
+    // return data.data.results   ("image_not_available"))
+    // renderComics()
+    renderCharacters()
 }
 function renderComics() {
     clearTable(".mainTable")
@@ -57,8 +61,9 @@ function renderComics() {
   
 
 function renderCharacters() {
+    clearTable(".mainTable")
     datos.forEach((character) => {
-        clearTable()
+        
         $(".mainTable").innerHTML += `
         <div class = "itemBox">
                 <div class=" w-48 items-center">
@@ -71,12 +76,31 @@ function renderCharacters() {
     }
 
 $("#orderComic").onchange = function (e) {
-    orderBy= e.target.value
+    if (type=="characters" && e.target.value=="title"){
+        orderBy= "-name"
+        return
+    }else if(type=="characters"&&  e.target.value=="-title") {
+        orderBy= "-name"
+        return
+    }else{
+        orderBy= e.target.value
+    }
     console.log(`order by`,orderBy)
 }
 $("#typeComic").onchange = function (e) {
     type= e.target.value
-    console.log(type)
+    if (type=="characters" && orderBy=="title"){
+        orderBy= "name"
+        return
+    }else if(type=="characters" && orderBy=="-title") {
+        orderBy= "-name"
+        return
+    }else{
+        orderBy="title"
+    }
+    console.log(`order by`,orderBy)
+
+
 }
 $("#searchImput").onchange = function (e) {
     search = e.target.value
