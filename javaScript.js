@@ -99,6 +99,46 @@ $(".page-next").onclick = function (e) {
 
 
 
+
+
+const printComicDescription = async() => {
+    const comics = await getMarvelComics()
+    for(let comic of comics){
+        clearTable(".comicDescription")
+        const comicDate = comic.dates.find(date => date.type === "onsaleDate").date;
+        const formattedDate = new Date(comicDate).toDateString();
+
+        const writers = comic.creators.items.filter(creator => creator.role === "writer");
+        const writerNames = writers.map(writer => writer.name).join(', ');
+
+        if (comic.textObjects && comic.textObjects.length > 0) {
+            $(".comicDescription").innerHTML += `
+            <div>
+                <img src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+            </div>
+            <div>
+                <p>${comic.title}</p>
+                <p>Publicado:</p>
+                <p>${formattedDate}</p>
+                <p>Guionistas: </p>
+                <spam>${writerNames}</spam>
+                <p>Descripción: </p>
+                <spam>${comic.textObjects[0].text}<spam>
+            </div>
+            <div>
+                <p>Personajes</p>
+                <p># results</p>
+                <div>
+                    <img src="#" alt="characterCover">
+                    <p class="characterTitle font-semibold"></p>
+                </div>
+            </div>
+            `
+        }
+    }
+}
+
+
 const initializeApp = () => {
     getMarvelComics()
 
