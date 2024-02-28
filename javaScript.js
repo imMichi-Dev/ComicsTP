@@ -37,7 +37,6 @@ async function getMarvelComics() {
 }
 
 function renderComics() {
-    // let typeChange = type = "characters" ? `name` : `title`
     clearTable(".mainTable")
     datos.forEach((comic) => {
         if(type=="characters"){
