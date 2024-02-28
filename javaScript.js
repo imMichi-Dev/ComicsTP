@@ -34,7 +34,7 @@ async function getMarvelComics() {
         console.log(error);
     }
     renderComics()
-    // printComicDescription()
+    //printComicDescription()
 }
 
 function renderComics() {
@@ -44,26 +44,26 @@ function renderComics() {
         if(type=="characters"){
             console.log("holi")
             $(".mainTable").innerHTML += `
-            <button class="cardButton">
-                <div class = "itemBox">
+
+                <div class="itemBox" >
                         <div class="w-48 items-center">
                             <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
                         </div>
                         <p class="comicTitle font-semibold">${comic.name}</p>
                 </div>  
-            </button>   
+  
                     `
         }else{
             console.log("holi")
             $(".mainTable").innerHTML += `
-            <button class="cardButton">
-                <div class = "itemBox">
+  
+                <div class = "itemBox" onclick="getComicId(${comic.id})">
                         <div class="w-48 items-center">
                             <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
                         </div>
                         <p class="comicTitle font-semibold">${comic.title}</p>
                 </div>     
-            </button>
+
                     `
         }
     })
@@ -119,45 +119,102 @@ $(".page-next").onclick = function (e) {
 // $(".cardButton").onclick = function (e) {
 //     printComicDescription()
 // }
+async function getComicId(id){
 
-const printComicDescription = async() => {
-    const comics = await getMarvelComics()
-    console.log("holi description");
-    for(let comic in comics){
-        console.log("holi description2");
-        clearTable(".comicDescription")
-        const comicDate = comic.dates.find(date => date.type === "onsaleDate").date;
-        const formattedDate = new Date(comicDate).toDateString();
+    try {
+        console.log("id")
+        const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}`)
+        const data = await response.json()
+        // datos = data.data.results
+        console.log(id);
 
-        const writers = comic.creators.items.filter(creator => creator.role === "writer");
-        const writerNames = writers.map(writer => writer.name).join(', ');
-
-        if (comic.textObjects && comic.textObjects.length > 0) {
-            $(".comicDescription").innerHTML += `
-            <div>
-                <img src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-            </div>
-            <div>
-                <p>${comic.title}</p>
-                <p>Publicado:</p>
-                <p>${formattedDate}</p>
-                <p>Guionistas: </p>
-                <spam>${writerNames}</spam>
-                <p>Descripción: </p>
-                <spam>${comic.textObjects[0].text}<spam>
-            </div>
-            <div>
-                <p>Personajes</p>
-                <p># results</p>
-                <div>
-                    <img src="#" alt="characterCover">
-                    <p class="characterTitle font-semibold"></p>
-                </div>
-            </div>
-            `
-        }
+        
+    } catch (error) {
+        console.log(error);
     }
+    printComicDescription()
 }
+
+
+function printComicDescription ()  {
+            clearTable(".mainTable")
+            // const comicDate = comic.dates.find(date => date.type === "onsaleDate").date;
+            // const formattedDate = new Date(comicDate).toDateString();
+    
+            // const writers = comic.creators.items.filter(creator => creator.role === "writer");
+            // const writerNames = writers.map(writer => writer.name).join(', ');
+    
+            if (comic.textObjects && comic.textObjects.length > 0) {
+                $(".comicDescription").innerHTML += `
+                <div>
+                    <img src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+                </div>
+                <div>
+                    <p>${comic.title}</p>
+                    <p>Publicado:</p>
+                    <p>${formattedDate}</p>
+                    <p>Guionistas: </p>
+                    <spam>${writerNames}</spam>
+                    <p>Descripción: </p>
+                    <spam>${comic.textObjects[0].text}<spam>
+                </div>
+                <div>
+                    <p>Personajes</p>
+                    <p># results</p>
+                    <div>
+                        <img src="#" alt="characterCover">
+                        <p class="characterTitle font-semibold"></p>
+                    </div>
+                </div>
+                `
+            }
+        }
+    
+
+
+
+
+
+
+
+// const printComicDescription = async() => {
+//     const comics = await getMarvelComics()
+//     console.log("holi description");
+//     for(let comic of comics){
+//         console.log("holi description2");
+//         clearTable(".comicDescription")
+//         const comicDate = comic.dates.find(date => date.type === "onsaleDate").date;
+//         const formattedDate = new Date(comicDate).toDateString();
+
+//         const writers = comic.creators.items.filter(creator => creator.role === "writer");
+//         const writerNames = writers.map(writer => writer.name).join(', ');
+
+//         if (comic.textObjects && comic.textObjects.length > 0) {
+//             $(".comicDescription").innerHTML += `
+//             <div>
+//                 <img src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+//             </div>
+//             <div>
+//                 <p>${comic.title}</p>
+//                 <p>Publicado:</p>
+//                 <p>${formattedDate}</p>
+//                 <p>Guionistas: </p>
+//                 <spam>${writerNames}</spam>
+//                 <p>Descripción: </p>
+//                 <spam>${comic.textObjects[0].text}<spam>
+//             </div>
+//             <div>
+//                 <p>Personajes</p>
+//                 <p># results</p>
+//                 <div>
+//                     <img src="#" alt="characterCover">
+//                     <p class="characterTitle font-semibold"></p>
+//                 </div>
+//             </div>
+//             `
+//         }
+//     }
+// }
 
 
 const initializeApp = () => {
