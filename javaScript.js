@@ -100,7 +100,7 @@ $(".page-next").onclick = function (e) {
 
 const initializeApp = () => {
     getMarvelComics()
-    renderComics()
+
 }
 
 window.addEventListener("load", initializeApp)
