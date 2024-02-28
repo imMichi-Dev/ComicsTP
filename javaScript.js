@@ -38,6 +38,7 @@ async function getMarvelComics() {
 
 function renderComics() {
     clearTable(".mainTable")
+    $(".resultCount").textContent = `${datos.length} Resultados`
     datos.forEach((comic) => {
         if(type=="characters"){
             console.log("holi")
