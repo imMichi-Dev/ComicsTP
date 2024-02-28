@@ -40,15 +40,27 @@ function renderComics() {
     // let typeChange = type = "characters" ? `name` : `title`
     clearTable(".mainTable")
     datos.forEach((comic) => {
-        console.log("holi")
-        $(".mainTable").innerHTML += `
-        <div class = "itemBox">
-                <div class="w-48 items-center">
-                    <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-                </div>
-                <p class="comicTitle font-semibold">${comic.title}</p>
-        </div>     
-                `
+        if(type=="characters"){
+            console.log("holi")
+            $(".mainTable").innerHTML += `
+            <div class = "itemBox">
+                    <div class="w-48 items-center">
+                        <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
+                    </div>
+                    <p class="comicTitle font-semibold">${comic.name}</p>
+            </div>     
+                    `
+        }else{
+            console.log("holi")
+            $(".mainTable").innerHTML += `
+            <div class = "itemBox">
+                    <div class="w-48 items-center">
+                        <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+                    </div>
+                    <p class="comicTitle font-semibold">${comic.title}</p>
+            </div>     
+                    `
+        }
     })
 }
 
