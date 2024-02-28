@@ -24,7 +24,7 @@ let datos = []
 async function getMarvelComics() {
     try {
         const searchData = search ? `&${type = "characters" ? `name` : `title`}StartsWith=${search}` : ""
-        urlAPI =`https://gateway.marvel.com/v1/public/${type}?limit=20&ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}${searchData}`
+        urlAPI =`https://gateway.marvel.com/v1/public/${type}?ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}${searchData}`
         console.log("cambios aqui", urlAPI)
         const response = await fetch(urlAPI)
         const data = await response.json()
@@ -34,6 +34,7 @@ async function getMarvelComics() {
         console.log(error);
     }
     renderComics()
+    // printComicDescription()
 }
 
 function renderComics() {
@@ -43,22 +44,26 @@ function renderComics() {
         if(type=="characters"){
             console.log("holi")
             $(".mainTable").innerHTML += `
-            <div class = "itemBox">
-                    <div class="w-48 items-center">
-                        <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
-                    </div>
-                    <p class="comicTitle font-semibold">${comic.name}</p>
-            </div>     
+            <button class="cardButton">
+                <div class = "itemBox">
+                        <div class="w-48 items-center">
+                            <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
+                        </div>
+                        <p class="comicTitle font-semibold">${comic.name}</p>
+                </div>  
+            </button>   
                     `
         }else{
             console.log("holi")
             $(".mainTable").innerHTML += `
-            <div class = "itemBox">
-                    <div class="w-48 items-center">
-                        <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-                    </div>
-                    <p class="comicTitle font-semibold">${comic.title}</p>
-            </div>     
+            <button class="cardButton">
+                <div class = "itemBox">
+                        <div class="w-48 items-center">
+                            <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+                        </div>
+                        <p class="comicTitle font-semibold">${comic.title}</p>
+                </div>     
+            </button>
                     `
         }
     })
@@ -111,11 +116,15 @@ $(".page-next").onclick = function (e) {
 
 
 
-
+// $(".cardButton").onclick = function (e) {
+//     printComicDescription()
+// }
 
 const printComicDescription = async() => {
     const comics = await getMarvelComics()
-    for(let comic of comics){
+    console.log("holi description");
+    for(let comic in comics){
+        console.log("holi description2");
         clearTable(".comicDescription")
         const comicDate = comic.dates.find(date => date.type === "onsaleDate").date;
         const formattedDate = new Date(comicDate).toDateString();
@@ -153,6 +162,7 @@ const printComicDescription = async() => {
 
 const initializeApp = () => {
     getMarvelComics()
+    
 
 }
 
