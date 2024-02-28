@@ -37,6 +37,7 @@ async function getMarvelComics() {
 }
 
 function renderComics() {
+    // let typeChange = type = "characters" ? `name` : `title`
     clearTable(".mainTable")
     datos.forEach((comic) => {
         console.log("holi")
@@ -53,7 +54,7 @@ function renderComics() {
 
 $("#orderComic").onchange = function (e) {
     if (type=="characters" && e.target.value=="title"){
-        orderBy= "-name"
+        orderBy= "name"
         return
     }else if(type=="characters"&&  e.target.value=="-title") {
         orderBy= "-name"
