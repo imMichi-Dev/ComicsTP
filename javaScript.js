@@ -122,41 +122,41 @@ $(".page-next").onclick = function (e) {
 async function getComicId(id){
 
     try {
-        console.log("id")
-        const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}`)
+
+        const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}?&ts=${ts}&apikey=${publicKey}&hash=${hash}`)
         const data = await response.json()
-        // datos = data.data.results
-        console.log(id);
+        datos = data.data.results
 
         
     } catch (error) {
         console.log(error);
     }
-    printComicDescription()
+    printComicDescription(datos)
 }
 
 
-function printComicDescription ()  {
+function printComicDescription (datos)  {
             clearTable(".mainTable")
-            // const comicDate = comic.dates.find(date => date.type === "onsaleDate").date;
-            // const formattedDate = new Date(comicDate).toDateString();
+            for(const dato of datos){
+            const comicDate = dato.dates.find(date => date.type === "onsaleDate").date;
+            const formattedDate = new Date(comicDate).toDateString();
     
-            // const writers = comic.creators.items.filter(creator => creator.role === "writer");
-            // const writerNames = writers.map(writer => writer.name).join(', ');
+            const writers = dato.creators.items.filter(creator => creator.role === "writer");
+            const writerNames = writers.map(writer => writer.name).join(', ');
     
-            if (comic.textObjects && comic.textObjects.length > 0) {
-                $(".comicDescription").innerHTML += `
+            if (dato.textObjects && dato.textObjects.length > 0) {
+                $(".mainTable").innerHTML += `
                 <div>
-                    <img src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+                    <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
                 </div>
                 <div>
-                    <p>${comic.title}</p>
+                    <p>${dato.title}</p>
                     <p>Publicado:</p>
                     <p>${formattedDate}</p>
                     <p>Guionistas: </p>
                     <spam>${writerNames}</spam>
                     <p>Descripción: </p>
-                    <spam>${comic.textObjects[0].text}<spam>
+                    <spam>${dato.textObjects[0].text}<spam>
                 </div>
                 <div>
                     <p>Personajes</p>
@@ -167,7 +167,7 @@ function printComicDescription ()  {
                     </div>
                 </div>
                 `
-            }
+            }}
         }
     
 
