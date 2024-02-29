@@ -45,7 +45,7 @@ function renderComics() {
             console.log("holi")
             $(".mainTable").innerHTML += `
 
-                <div class="itemBox" >
+                <div class="itemBox" onclick="getCharacterId(${comic.id})">
                         <div class="w-48 items-center">
                             <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
                         </div>
@@ -116,24 +116,57 @@ $(".page-next").onclick = function (e) {
 
 
 
+async function getCharacterId(id){
+    try {
+        const response = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}?&ts=${ts}&apikey=${publicKey}&hash=${hash}`)
+        console.log(response)
+        const data = await response.json()
+        datos = data.data.results  
+    } catch (error) {
+        console.log(error);
+    }
+    printCharacterDescription(datos)
+}
+
+function printCharacterDescription (datos)  {
+            clearTable(".mainTable")
+            for(const dato of datos){
+            
+    
+            if (dato.description && dato.description.length > 0) {
+                $(".mainTable").innerHTML += `
+                <div>
+                    <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
+                </div>
+                <div>
+                    <p>${dato.name}</p>
+                    <p>Descripción: </p>
+                    <spam>${dato.description}<spam>
+                </div>
+                <div>
+                    <p>Personajes</p>
+                    <p># results</p>
+                    <div>
+                        <img src="#" alt="characterCover">
+                        <p class="characterTitle font-semibold"></p>
+                    </div>
+                </div>
+                `
+            }}
+        }
 // $(".cardButton").onclick = function (e) {
 //     printComicDescription()
 // }
 async function getComicId(id){
-
     try {
-
         const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}?&ts=${ts}&apikey=${publicKey}&hash=${hash}`)
         const data = await response.json()
-        datos = data.data.results
-
-        
+        datos = data.data.results  
     } catch (error) {
         console.log(error);
     }
     printComicDescription(datos)
 }
-
 
 function printComicDescription (datos)  {
             clearTable(".mainTable")
