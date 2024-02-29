@@ -34,7 +34,7 @@ async function getMarvelComics() {
         console.log(error);
     }
     renderComics()
-    //printComicDescription()
+
 }
 
 function renderComics() {
@@ -46,7 +46,7 @@ function renderComics() {
             $(".mainTable").innerHTML += `
 
                 <div class="itemBox" onclick="getCharacterId(${comic.id})">
-                        <div class="w-48 items-center">
+                        <div class="w-48 items-center m-8">
                             <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
                         </div>
                         <p class="comicTitle font-semibold">${comic.name}</p>
@@ -134,21 +134,24 @@ function printCharacterDescription (datos)  {
             
     
             if (dato.description && dato.description.length > 0) {
-                $(".mainTable").innerHTML += `
-                <div>
-                    <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
-                </div>
-                <div>
-                    <p>${dato.name}</p>
-                    <p>Descripción: </p>
-                    <spam>${dato.description}<spam>
-                </div>
-                <div>
-                    <p>Personajes</p>
-                    <p># results</p>
+                $(".descriptionTable").innerHTML += `
+                <div class="flex flex-col w-full">
+                    <div class="flex flex-row justify-start w-full">
+                        <div class="w-1/5">
+                            <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
+                        </div>
+                        <div class="w-4/5 text-left ml-6">
+                            <p class="font-bold">${dato.name}</p>
+                            <spam>${dato.description}<spam>
+                        </div>
+                    </div>
                     <div>
-                        <img src="#" alt="characterCover">
-                        <p class="characterTitle font-semibold"></p>
+                        <p class="text-left">Personajes</p>
+                        <p class="text-left"># results</p>
+                        <div class="flex flex-row justify-start">
+                            <img src="#" alt="characterCover">
+                            <p class="characterTitle font-semibold class="text-left""></p>
+                        </div>
                     </div>
                 </div>
                 `
@@ -165,7 +168,7 @@ async function getComicId(id){
     } catch (error) {
         console.log(error);
     }
-    printComicDescription(datos)
+    //printComicDescription(datos)
 }
 
 function printComicDescription (datos)  {
@@ -179,6 +182,8 @@ function printComicDescription (datos)  {
     
             if (dato.textObjects && dato.textObjects.length > 0) {
                 $(".mainTable").innerHTML += `
+                <div class="flex flex-col">
+                <div>
                 <div>
                     <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
                 </div>
@@ -191,13 +196,15 @@ function printComicDescription (datos)  {
                     <p>Descripción: </p>
                     <spam>${dato.textObjects[0].text}<spam>
                 </div>
-                <div>
+                </div>
+                <div  >
                     <p>Personajes</p>
                     <p># results</p>
                     <div>
                         <img src="#" alt="characterCover">
                         <p class="characterTitle font-semibold"></p>
                     </div>
+                </div>
                 </div>
                 `
             }}
