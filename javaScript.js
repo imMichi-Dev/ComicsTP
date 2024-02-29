@@ -114,8 +114,6 @@ $(".page-next").onclick = function (e) {
     getMarvelComics()
 }
 
-
-
 async function getCharacterId(id){
     try {
         const response = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}?&ts=${ts}&apikey=${publicKey}&hash=${hash}`)
@@ -131,16 +129,14 @@ async function getCharacterId(id){
 function printCharacterDescription (datos)  {
             clearTable(".mainTable")
             for(const dato of datos){
-            
-    
             if (dato.description && dato.description.length > 0) {
                 $(".descriptionTable").innerHTML += `
                 <div class="flex flex-col w-full">
                     <div class="flex flex-row justify-start w-full">
-                        <div class="w-1/5">
+                        <div >
                             <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
                         </div>
-                        <div class="w-4/5 text-left ml-6">
+                        <div class="text-left ml-6">
                             <p class="font-bold">${dato.name}</p>
                             <spam>${dato.description}<spam>
                         </div>
@@ -157,9 +153,7 @@ function printCharacterDescription (datos)  {
                 `
             }}
         }
-// $(".cardButton").onclick = function (e) {
-//     printComicDescription()
-// }
+
 async function getComicId(id){
     try {
         const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}?&ts=${ts}&apikey=${publicKey}&hash=${hash}`)
@@ -168,7 +162,7 @@ async function getComicId(id){
     } catch (error) {
         console.log(error);
     }
-    //printComicDescription(datos)
+    printComicDescription(datos)
 }
 
 function printComicDescription (datos)  {
@@ -181,30 +175,30 @@ function printComicDescription (datos)  {
             const writerNames = writers.map(writer => writer.name).join(', ');
     
             if (dato.textObjects && dato.textObjects.length > 0) {
-                $(".mainTable").innerHTML += `
-                <div class="flex flex-col">
-                <div>
-                <div>
-                    <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
-                </div>
-                <div>
-                    <p>${dato.title}</p>
-                    <p>Publicado:</p>
-                    <p>${formattedDate}</p>
-                    <p>Guionistas: </p>
-                    <spam>${writerNames}</spam>
-                    <p>Descripción: </p>
-                    <spam>${dato.textObjects[0].text}<spam>
-                </div>
-                </div>
-                <div  >
-                    <p>Personajes</p>
-                    <p># results</p>
-                    <div>
-                        <img src="#" alt="characterCover">
-                        <p class="characterTitle font-semibold"></p>
+                $(".descriptionTable").innerHTML += `
+                <div class="flex flex-col w-full">
+                    <div class="flex flex-row justify-start w-full">
+                        <div>
+                            <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
+                        </div>
+                        <div class="text-left ml-6">
+                            <p class="font-bold">${dato.title}</p>
+                            <p class="font-bold">Publicado:</p>
+                            <p>${formattedDate}</p>
+                            <p class="font-bold">Guionistas: </p>
+                            <spam>${writerNames}</spam>
+                            <p class="font-bold">Descripción: </p>
+                            <spam>${dato.textObjects[0].text}<spam>
+                        </div>
                     </div>
-                </div>
+                    <div class="text-left">
+                        <p>Personajes</p>
+                        <p># results</p>
+                        <div>
+                            <img src="#" alt="characterCover">
+                            <p class="characterTitle font-semibold"></p>
+                        </div>
+                    </div>
                 </div>
                 `
             }}
