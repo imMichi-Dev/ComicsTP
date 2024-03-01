@@ -91,11 +91,11 @@ $(".page-first").onclick = function (e) {
 
 // Función para ir a la última página
 $(".page-last").onclick = function (e) {
-    const totalPages = Math.ceil(datos.length / resultsPerPage); // Calcular el número total de páginas
-    currentPage = totalPages; // Establecer la página actual como la última página
-    offSet = (totalPages - 1) * resultsPerPage; // Calcular el desplazamiento para la última página
+    const totalPages = Math.ceil(datos.length / resultsPerPage); 
+    currentPage = totalPages; 
+    offSet = (totalPages - 1) * resultsPerPage; 
     console.log("ultima pagina");
-    getMarvelComics(); // Obtener los cómics de la última página
+    getMarvelComics(); 
 };
 
 
