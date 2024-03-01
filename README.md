@@ -33,14 +33,9 @@ Los requisitos mínimos tenidos en cuenta en este proyecto:
 
 La API que vamos a utilizar para este proyecto es la de Marvel Cómics.
 
-    Registro (Para obtener la API KEY)
-    Información general
-    Uso de imágenes
-    Documentación
-
 ##Enlace: 🥰
 
-Dale click al siguiente enlace para acceder Buscador de Comics
+Dale click al siguiente enlace para acceder [Buscador de Comics](https://im-majo-jojo.github.io/ComicsTP/ "Buscador de Comics")
 ### Herramientas usadas: :toolbox:
 
 ![My Skills](https://skillicons.dev/icons?i=vscode,github,git,html,js,md,tailwind) 
