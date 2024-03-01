@@ -1,0 +1,116 @@
+    
+    // $(".typeSearch").addEventListener("input", (e) => {
+    //     const selectionType = e.target.value
+    //     if (selectionType==="comics"){
+    //         printComic()
+    //     }else{
+    //         printCharacter()
+    //     }
+    // })
+    // $(".orderComic").addEventListener("input", (e) => {
+    //     const selectionOder = e.target.value
+    //     if (selectionOder==="name"){
+    //         printComic()
+    //     }else{
+    //         printCharacter()
+    //     }
+    // })
+
+    // $("#categoria-select").addEventListener("input", (e) => {
+    //     const filterSelected = e.target.value
+    //     const currentData = getData("operations")
+    //     if(filterSelected==="Todas"){
+    //         setData("operations", currentData)
+    //         renderOperations(currentData)
+    //     }else{
+    //         const filterOperation = currentData.filter(operation => operation.category === filterSelected)
+    //         renderOperations(filterOperation)
+    //     }
+    // })
+------------------------------------------
+// const getMarvelComics = async () => {
+//     const response = await fetch (url)
+//     const data = await response.json()
+//     console.log(data.data.results)
+//     return data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
+
+// }
+
+
+// const getMarvelCharacters = async () => {
+//     const url = `${urlBase}characters?limit=20&ts=${ts}&apikey=${publicKey}&hash=${hash}`
+//     const response = await fetch (url)
+//     const data = await response.json()
+//     console.log(data.data.results)
+//     return data.data.results
+// }
+
+
+//imprimir personaje
+// const printCharacter = async() => {
+//     const characters = await getMarvelComics()
+//     clearTable(".mainTable")
+//     for(let character of characters){
+//         $(".mainTable").innerHTML += `
+//         <div class = "itemBox">
+//                 <div class=" w-48 items-center">
+//                     <img  src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="${character.name}">
+//                     <p class="characterTitle font-semibold">${character.name}</p> 
+//                 </div> 
+//         </div> 
+//         `
+//     }  
+// }
+// imprimir comic
+// const printComic = async() => {
+//     const comics = await getMarvelComics()
+//     clearTable(".mainTable")
+//     for(let comic of comics){
+//         $(".mainTable").innerHTML += `
+//         <div class = "itemBox">
+//                 <div class="w-48 items-center">
+//                     <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+//                 </div>
+//                 <p class="comicTitle font-semibold">${comic.title}</p>
+//         </div>     
+//         `
+//     }  
+// }
+
+
+// const printComicDescription = async() => {
+//     const comics = await getMarvelComics()
+//     for(let comic of comics){      
+//         clearTable(".comicDescription")
+//         const comicDate = comic.dates.find(date => date.type === "onsaleDate").date;
+//         const formattedDate = new Date(comicDate).toDateString();
+
+//         const writers = comic.creators.items.filter(creator => creator.role === "writer");
+//         const writerNames = writers.map(writer => writer.name).join(', ');
+
+//         if (comic.textObjects && comic.textObjects.length > 0) {
+//             $(".comicDescription").innerHTML += `
+//             <div>
+//                 <img src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+//             </div>
+//             <div>
+//                 <p>${comic.title}</p>
+//                 <p>Publicado:</p>
+//                 <p>${formattedDate}</p>
+//                 <p>Guionistas: </p>
+//                 <spam>${writerNames}</spam>
+//                 <p>Descripción: </p>
+//                 <spam>${comic.textObjects[0].text}<spam>
+//             </div>
+//             <div>
+//                 <p>Personajes</p>
+//                 <p># results</p>
+//                 <div>
+//                     <img src="#" alt="characterCover">
+//                     <p class="characterTitle font-semibold"></p> 
+//                 </div>
+//             </div>   
+//             `
+//         }
+//     }  
+// }
