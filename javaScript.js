@@ -120,7 +120,34 @@ async function getCharacterId(id){
         console.log(error);
     }
     printCharacterDescription(datos)
+    getCharacterComics(id)
 }
+async function getCharacterComics(id) {
+    try {
+        const response = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
+        const data = await response.json()
+        const comics = data.data.results
+        printCharacterComics(comics)
+        console.log(comics)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
+function printCharacterComics (comics){
+    $(".resultComicsCount").textContent = `${comics.length} Resultados`
+    for (const comic of comics) {
+        console.log("halo");
+        $(".mainTable").innerHTML += `
+        <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
+                <div class="w-48 items-center">
+                    <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+                </div>
+                <p class="comicTitle font-semibold">${comic.title}</p>
+        </div>     
+        `
+    }}
 
 function printCharacterDescription (datos)  {
     clearTable(".mainTable")
@@ -137,13 +164,9 @@ function printCharacterDescription (datos)  {
                     <spam>${dato.description}<spam>
                 </div>
             </div>
-            <div>
-                <p class="text-left font-bold">Personajes</p>
-                <p class="text-left"># results</p>
-                <div class="flex flex-row justify-start">
-                    <img src="#" alt="characterCover">
-                    <p class="characterTitle font-semibold class="text-left""></p>
-                </div>
+            <div class="text-left">
+                <p class="font-bold">Comics</p>
+                <p class="resultComicsCount"></p>
             </div>
         </div>
         `
@@ -201,10 +224,7 @@ function printComicDescription (datos)  {
         </div>
         <div class="text-left">
             <p class="font-bold">Personajes</p>
-            <p class="resultCharactersCount"># results</p>
-            <div>
-                <p class="characterTitle font-semibold"></p>
-            </div>
+            <p class="resultCharactersCount"></p>
         </div>
     </div>
     `
@@ -214,13 +234,17 @@ function printComicCharacters (characters){
     $(".resultCharactersCount").textContent = `${characters.length} Resultados`
     for (const character of characters) {
         console.log("halo");
-        $(".mainTable").innerHTML += `
+
+
+            $(".mainTable").innerHTML += `
             <div>
                 <div class="w-48 justify-items-start items-center m-8">
                     <img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="${character.name}">
                 </div>
                 <p class="comicTitle font-semibold">${character.name}</p>
             </div>`;
+ 
+
     }}
 
 const initializeApp = () => {
