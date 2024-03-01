@@ -13,7 +13,7 @@
     let orderBy= "title"
     let offSet= 0
     let search=""
-
+    let resultsPerPage = 20 
     let page = 1
     let urlAPI = `https://gateway.marvel.com/v1/public/${type}?ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}`
 
@@ -69,7 +69,7 @@ async function getMarvelComics() {
         getMarvelComics()
     }
 //PAGES BUTTONS
-const resultsPerPage = 20; 
+
 $(".page-prev").onclick = function (e) {
     if (page > 1) {
         page--
