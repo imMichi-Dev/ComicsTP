@@ -158,19 +158,22 @@ async function getComicId(id){
     } catch (error) {
         console.log(error);
     }
-    printComicDescription(datos)
+    printComicDescription(datos);
+    //printComicCharacters(datos)
+    getComicCharacters(id)
 }
 async function getComicCharacters(id) {
     try {
-        const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${comicId}/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
+        const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
         const data = await response.json();
         const characters = data.data.results;
-        return characters;
+        printComicCharacters(characters);
+        console.log(characters); // Llamar a la función de impresión con los personajes obtenidos
     } catch (error) {
         console.error(error);
-        return []; 
     }
 }
+
 
 function printComicDescription (datos)  {
     clearTable(".mainTable")
@@ -181,46 +184,45 @@ function printComicDescription (datos)  {
     const writers = dato.creators.items.filter(creator => creator.role === "writer");
     const writerNames = writers.map(writer => writer.name).join(', ');
 
-    if (dato.textObjects && dato.textObjects.length > 0) {
-        $(".mainTable").innerHTML += `
-        <div class="flex flex-col">
-            <div class="flex flex-row justify-start w-full">
-                <div class="min-w-48 max-w-80">
-                    <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
-                </div>
-                <div class="text-left ml-6">
-                    <p class="font-bold">${dato.title}</p>
-                    <p class="font-bold">Publicado:</p>
-                    <p>${formattedDate}</p>
-                    <p class="font-bold">Guionistas: </p>
-                    <spam>${writerNames}</spam>
-                    <p class="font-bold">Descripción: </p>
-                    <spam>${dato.textObjects[0].text}<spam>
-                </div>
+    $(".mainTable").innerHTML += `
+    <div class="flex flex-col">
+        <div class="flex flex-row justify-start w-full">
+            <div class="min-w-48 max-w-80">
+                <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
             </div>
-            <div class="text-left">
-                <p>Personajes</p>
-                <p># results</p>
-                <div>
-                    <img src="#" alt="characterCover">
-                    <p class="characterTitle font-semibold"></p>
-                </div>
+            <div class="text-left ml-6">
+                <p class="font-bold">${dato.title}</p>
+                <p class="font-bold">Publicado:</p>
+                <p>${formattedDate}</p>
+                <p class="font-bold">Guionistas: </p>
+                <spam>${writerNames}</spam>
+                <p class="font-bold">Descripción: </p>
+                <spam>${dato.description}<spam>
             </div>
         </div>
-        `
-    }}
-}
-function printComicCharacters (){
-    for(const dato of datos)
-    $(".mainTable").innerHTML += `
-    <div class="itemBox" onclick="getCharacterId(${comic.id})">
-            <div class="w-48 items-center m-8">
-                <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
+        <div class="text-left">
+            <p>Personajes</p>
+            <p># results</p>
+            <div>
+                <img src="#" alt="characterCover">
+                <p class="characterTitle font-semibold"></p>
             </div>
-            <p class="comicTitle font-semibold">${comic.name}</p>
-    </div>  
-        `
-}  
+        </div>
+    </div>
+    `
+}
+}
+function printComicCharacters (characters){
+    for (const character of characters) {
+        console.log("halo");
+        $(".mainTable").innerHTML += `
+            <div>
+                <div class="w-48 justify-items-start items-center m-8">
+                    <img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="${character.name}">
+                </div>
+                <p class="comicTitle font-semibold">${character.name}</p>
+            </div>`;
+    }}
 
 
 
