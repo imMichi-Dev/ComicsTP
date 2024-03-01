@@ -15,7 +15,7 @@
     let search=""
 
     let page = 1
-    let urlAPI = `https://gateway.marvel.com/v1/public/${type}?limit=20&ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}`
+    let urlAPI = `https://gateway.marvel.com/v1/public/${type}?ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}`
 
     let datos = []
 
@@ -28,7 +28,8 @@ async function getMarvelComics() {
         const response = await fetch(urlAPI)
         const data = await response.json()
         datos = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
-        
+        const totals = data.data.total
+        $(".resultCount").textContent = `${totals} Resultados`
     } catch (error) {
         console.log(error);
     }
@@ -129,7 +130,6 @@ async function getMarvelComics() {
 //RENDERS
     function renderComics() {
         clearTable(".mainTable")
-        $(".resultCount").textContent = `${datos.length} Resultados`
         datos.forEach((comic) => {
             if(type=="characters"){
                 console.log("holi")
@@ -189,20 +189,16 @@ async function getMarvelComics() {
     }}
 
     function printComicCharacters (characters){
-        $(".resultCharactersCount").textContent = `${characters.length} Resultados`
+        $(".resultCharactersCount").textContent = `${characters.total} Resultados`
         for (const character of characters) {
             console.log("halo");
-    
-    
                 $(".mainTable").innerHTML += `
                 <div>
                     <div class="w-48 justify-items-start items-center m-8">
                         <img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="${character.name}">
                     </div>
                     <p class="comicTitle font-semibold">${character.name}</p>
-                </div>`;
-     
-    
+                </div>`;    
         }}
 
         function printCharacterComics (comics){
@@ -222,7 +218,6 @@ async function getMarvelComics() {
         function printCharacterDescription (datos)  {
             clearTable(".mainTable")
             for(const dato of datos){
-            if (dato.description && dato.description.length > 0) {
                 $(".mainTable").innerHTML += `
                 <div class="flex flex-col w-full">
                     <div class="flex flex-row justify-start w-full">
@@ -240,7 +235,7 @@ async function getMarvelComics() {
                     </div>
                 </div>
                 `
-            }}
+            }
         }
 
 const initializeApp = () => {
