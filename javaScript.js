@@ -89,7 +89,6 @@ $(".page-first").onclick = function (e) {
     getMarvelComics()
 };
 
-// Función para ir a la última página
 $(".page-last").onclick = function (e) {
     const totalPages = Math.ceil(totals / resultsPerPage); 
 ;   console.log(totalPages, totals);
@@ -100,14 +99,12 @@ $(".page-last").onclick = function (e) {
     
 };
 
-
-
 //GETTING ID'S
     async function getComicId(id){
         try {
             const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}?&ts=${ts}&apikey=${publicKey}&hash=${hash}`)
             const data = await response.json()
-            datos = data.data.results  
+            datos = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
         } catch (error) {
             console.log(error);
         }
@@ -118,7 +115,7 @@ $(".page-last").onclick = function (e) {
         try {
             const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
             const data = await response.json()
-            const characters = data.data.results
+            const characters = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
             printComicCharacters(characters)
             console.log(characters)
         } catch (error) {
