@@ -16,7 +16,7 @@
     let resultsPerPage = 20 
     let page = 1
     let urlAPI = `https://gateway.marvel.com/v1/public/${type}?ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}`
-
+    let totals = 0
     let datos = []
 
 //FETCHING
@@ -28,7 +28,7 @@ async function getMarvelComics() {
         const response = await fetch(urlAPI)
         const data = await response.json()
         datos = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
-        const totals = data.data.total
+        totals = data.data.total
         $(".resultCount").textContent = `${totals} Resultados`
     } catch (error) {
         console.log(error);
@@ -82,7 +82,7 @@ $(".page-next").onclick = function (e) {
     offSet += resultsPerPage
     getMarvelComics()
 };
-// Función para ir a la primera página
+
 $(".page-first").onclick = function (e) {
     page = 1
     offSet = 0
@@ -91,11 +91,13 @@ $(".page-first").onclick = function (e) {
 
 // Función para ir a la última página
 $(".page-last").onclick = function (e) {
-    const totalPages = Math.ceil(datos.length / resultsPerPage); 
-    currentPage = totalPages; 
+    const totalPages = Math.ceil(totals / resultsPerPage); 
+;   console.log(totalPages, totals);
+    page = totalPages; 
     offSet = (totalPages - 1) * resultsPerPage; 
     console.log("ultima pagina");
     getMarvelComics(); 
+    
 };
 
 
@@ -207,7 +209,7 @@ $(".page-last").onclick = function (e) {
     }}
 
     function printComicCharacters (characters){
-        $(".resultCharactersCount").textContent = `${characters.total} Resultados`
+        $(".resultCharactersCount").textContent = `${characters.length} Resultados`
         for (const character of characters) {
             console.log("halo");
                 $(".mainTable").innerHTML += `
