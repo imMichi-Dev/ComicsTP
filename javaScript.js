@@ -24,7 +24,6 @@ async function getMarvelComics() {
     try {
         const searchData = search ? `&${type = "characters" ? `name` : `title`}StartsWith=${search}` : ""
         urlAPI =`https://gateway.marvel.com/v1/public/${type}?ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}${searchData}`
-        console.log("cambios aqui", urlAPI)
         const response = await fetch(urlAPI)
         const data = await response.json()
         datos = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
@@ -47,7 +46,6 @@ async function getMarvelComics() {
         }else{
             orderBy= e.target.value
         }
-        console.log(`order by`,orderBy)
     }
     $("#typeComic").onchange = function (e) {
         type= e.target.value
@@ -60,7 +58,6 @@ async function getMarvelComics() {
         }else{
             orderBy="title"
         }
-        console.log(`order by`,orderBy)
     }
     $("#searchImput").onchange = function (e) {
         search = e.target.value
@@ -90,12 +87,10 @@ $(".page-first").onclick = function (e) {
 };
 
 $(".page-last").onclick = function (e) {
-    const totalPages = Math.ceil(totals / resultsPerPage); 
-;   console.log(totalPages, totals);
-    page = totalPages; 
-    offSet = (totalPages - 1) * resultsPerPage; 
-    console.log("ultima pagina");
-    getMarvelComics(); 
+    const totalPages = Math.ceil(totals / resultsPerPage)
+    page = totalPages
+    offSet = (totalPages - 1) * resultsPerPage
+    getMarvelComics()
     
 };
 
@@ -117,7 +112,6 @@ $(".page-last").onclick = function (e) {
             const data = await response.json()
             const characters = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
             printComicCharacters(characters)
-            console.log(characters)
         } catch (error) {
             console.error(error)
         }
@@ -139,7 +133,6 @@ $(".page-last").onclick = function (e) {
             const data = await response.json()
             const comics = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
             printCharacterComics(comics)
-            console.log(comics)
         } catch (error) {
             console.error(error)
         }
@@ -149,7 +142,6 @@ $(".page-last").onclick = function (e) {
         clearTable(".mainTable")
         datos.forEach((comic) => {
             if(type=="characters"){
-                console.log("holi")
                 $(".mainTable").innerHTML += `
                         <div class="itemBox min-w-40 max-w-48 m-5" onclick="getCharacterId(${comic.id})">
                                 <div class="w-48 items-center m-8">
@@ -159,7 +151,6 @@ $(".page-last").onclick = function (e) {
                         </div> 
                         `
             }else{
-                console.log("holi")
                 $(".mainTable").innerHTML += `
                         <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
                                 <div class="w-48 items-center">
@@ -211,14 +202,13 @@ $(".page-last").onclick = function (e) {
             $(".mainTable").innerHTML += `<p class="font-bold">No results</p>`
         }else{
             for (const character of characters) {
-                console.log("halo");
                     $(".mainTable").innerHTML += `
                     <div>
                         <div class="w-48 justify-items-start items-center m-8">
                             <img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="${character.name}">
                         </div>
                         <p class="comicTitle font-semibold">${character.name}</p>
-                    </div>`;    
+                    </div>`   
             }
         }
         
@@ -230,7 +220,6 @@ $(".page-last").onclick = function (e) {
             $(".mainTable").innerHTML += `<p class="font-bold">No results</p>`
         }else{
             for (const comic of comics) {
-                console.log("halo");
                 $(".mainTable").innerHTML += `
                 <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
                         <div class="w-48 items-center">
