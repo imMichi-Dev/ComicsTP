@@ -69,18 +69,37 @@ async function getMarvelComics() {
         getMarvelComics()
     }
 //PAGES BUTTONS
-    const pageFirst = document.querySelector("page-first");
-
-    const pageLast = document.querySelector("page-last");
-
-    $(".page-prev").onclick = function (e) {
-        offSet -= 20
+const resultsPerPage = 20; 
+$(".page-prev").onclick = function (e) {
+    if (page > 1) {
+        page--
+        offSet -= resultsPerPage
         getMarvelComics()
     }
-    $(".page-next").onclick = function (e) {
-        offSet += 20
-        getMarvelComics()
-    }
+};
+$(".page-next").onclick = function (e) {
+    page++
+    offSet += resultsPerPage
+    getMarvelComics()
+};
+// Función para ir a la primera página
+$(".page-first").onclick = function (e) {
+    page = 1
+    offSet = 0
+    getMarvelComics()
+};
+
+// Función para ir a la última página
+$(".page-last").onclick = function (e) {
+    const totalPages = Math.ceil(datos.length / resultsPerPage); // Calcular el número total de páginas
+    currentPage = totalPages; // Establecer la página actual como la última página
+    offSet = (totalPages - 1) * resultsPerPage; // Calcular el desplazamiento para la última página
+    console.log("ultima pagina");
+    getMarvelComics(); // Obtener los cómics de la última página
+};
+
+
+
 //GETTING ID'S
     async function getComicId(id){
         try {
@@ -107,7 +126,6 @@ async function getMarvelComics() {
     async function getCharacterId(id){
         try {
             const response = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}?&ts=${ts}&apikey=${publicKey}&hash=${hash}`)
-            console.log(response)
             const data = await response.json()
             datos = data.data.results  
         } catch (error) {
@@ -201,42 +219,42 @@ async function getMarvelComics() {
                 </div>`;    
         }}
 
-        function printCharacterComics (comics){
-            $(".resultComicsCount").textContent = `${comics.length} Resultados`
-            for (const comic of comics) {
-                console.log("halo");
-                $(".mainTable").innerHTML += `
-                <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
-                        <div class="w-48 items-center">
-                            <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-                        </div>
-                        <p class="comicTitle font-semibold">${comic.title}</p>
-                </div>     
-                `
-        }}
-        
-        function printCharacterDescription (datos)  {
-            clearTable(".mainTable")
-            for(const dato of datos){
-                $(".mainTable").innerHTML += `
-                <div class="flex flex-col w-full">
-                    <div class="flex flex-row justify-start w-full">
-                        <div class="min-w-48 max-w-80">
-                            <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
-                        </div>
-                        <div class="text-left ml-6">
-                            <p class="font-bold">${dato.name}</p>
-                            <spam>${dato.description}<spam>
-                        </div>
+    function printCharacterComics (comics){
+        $(".resultComicsCount").textContent = `${comics.length} Resultados`
+        for (const comic of comics) {
+            console.log("halo");
+            $(".mainTable").innerHTML += `
+            <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
+                    <div class="w-48 items-center">
+                        <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
                     </div>
-                    <div class="text-left">
-                        <p class="font-bold">Comics</p>
-                        <p class="resultComicsCount"></p>
+                    <p class="comicTitle font-semibold">${comic.title}</p>
+            </div>     
+            `
+    }}
+        
+    function printCharacterDescription (datos)  {
+        clearTable(".mainTable")
+        for(const dato of datos){
+            $(".mainTable").innerHTML += `
+            <div class="flex flex-col w-full">
+                <div class="flex flex-row justify-start w-full">
+                    <div class="min-w-48 max-w-80">
+                        <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
+                    </div>
+                    <div class="text-left ml-6">
+                        <p class="font-bold">${dato.name}</p>
+                        <spam>${dato.description}<spam>
                     </div>
                 </div>
-                `
-            }
+                <div class="text-left">
+                    <p class="font-bold">Comics</p>
+                    <p class="resultComicsCount"></p>
+                </div>
+            </div>
+            `
         }
+    }
 
 const initializeApp = () => {
     getMarvelComics()
