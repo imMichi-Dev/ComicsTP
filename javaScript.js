@@ -126,7 +126,7 @@ $(".page-last").onclick = function (e) {
         try {
             const response = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}?&ts=${ts}&apikey=${publicKey}&hash=${hash}`)
             const data = await response.json()
-            datos = data.data.results  
+            datos = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available")) 
         } catch (error) {
             console.log(error);
         }
@@ -137,7 +137,7 @@ $(".page-last").onclick = function (e) {
         try {
             const response = await fetch(`https://gateway.marvel.com/v1/public/characters/${id}/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
             const data = await response.json()
-            const comics = data.data.results
+            const comics = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
             printCharacterComics(comics)
             console.log(comics)
         } catch (error) {
@@ -207,30 +207,41 @@ $(".page-last").onclick = function (e) {
 
     function printComicCharacters (characters){
         $(".resultCharactersCount").textContent = `${characters.length} Resultados`
-        for (const character of characters) {
-            console.log("halo");
-                $(".mainTable").innerHTML += `
-                <div>
-                    <div class="w-48 justify-items-start items-center m-8">
-                        <img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="${character.name}">
-                    </div>
-                    <p class="comicTitle font-semibold">${character.name}</p>
-                </div>`;    
-        }}
+        if(characters.length===0){
+            $(".mainTable").innerHTML += `<p class="font-bold">No results</p>`
+        }else{
+            for (const character of characters) {
+                console.log("halo");
+                    $(".mainTable").innerHTML += `
+                    <div>
+                        <div class="w-48 justify-items-start items-center m-8">
+                            <img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="${character.name}">
+                        </div>
+                        <p class="comicTitle font-semibold">${character.name}</p>
+                    </div>`;    
+            }
+        }
+        
+    }
 
     function printCharacterComics (comics){
         $(".resultComicsCount").textContent = `${comics.length} Resultados`
-        for (const comic of comics) {
-            console.log("halo");
-            $(".mainTable").innerHTML += `
-            <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
-                    <div class="w-48 items-center">
-                        <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-                    </div>
-                    <p class="comicTitle font-semibold">${comic.title}</p>
-            </div>     
-            `
-    }}
+        if(comics.length===0){
+            $(".mainTable").innerHTML += `<p class="font-bold">No results</p>`
+        }else{
+            for (const comic of comics) {
+                console.log("halo");
+                $(".mainTable").innerHTML += `
+                <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
+                        <div class="w-48 items-center">
+                            <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+                        </div>
+                        <p class="comicTitle font-semibold">${comic.title}</p>
+                </div>     
+                `
+        }}
+        
+    }
         
     function printCharacterDescription (datos)  {
         clearTable(".mainTable")
