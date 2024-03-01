@@ -159,18 +159,17 @@ async function getComicId(id){
         console.log(error);
     }
     printComicDescription(datos);
-    //printComicCharacters(datos)
     getComicCharacters(id)
 }
 async function getComicCharacters(id) {
     try {
-        const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
-        const data = await response.json();
-        const characters = data.data.results;
-        printComicCharacters(characters);
-        console.log(characters); // Llamar a la función de impresión con los personajes obtenidos
+        const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${id}/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`)
+        const data = await response.json()
+        const characters = data.data.results
+        printComicCharacters(characters)
+        console.log(characters)
     } catch (error) {
-        console.error(error);
+        console.error(error)
     }
 }
 
@@ -201,10 +200,9 @@ function printComicDescription (datos)  {
             </div>
         </div>
         <div class="text-left">
-            <p>Personajes</p>
-            <p># results</p>
+            <p class="font-bold">Personajes</p>
+            <p class="resultCharactersCount"># results</p>
             <div>
-                <img src="#" alt="characterCover">
                 <p class="characterTitle font-semibold"></p>
             </div>
         </div>
@@ -213,6 +211,7 @@ function printComicDescription (datos)  {
 }
 }
 function printComicCharacters (characters){
+    $(".resultCharactersCount").textContent = `${characters.length} Resultados`
     for (const character of characters) {
         console.log("halo");
         $(".mainTable").innerHTML += `
@@ -223,53 +222,6 @@ function printComicCharacters (characters){
                 <p class="comicTitle font-semibold">${character.name}</p>
             </div>`;
     }}
-
-
-
-
-
-
-
-
-// const printComicDescription = async() => {
-//     const comics = await getMarvelComics()
-//     console.log("holi description");
-//     for(let comic of comics){
-//         console.log("holi description2");
-//         clearTable(".comicDescription")
-//         const comicDate = comic.dates.find(date => date.type === "onsaleDate").date;
-//         const formattedDate = new Date(comicDate).toDateString();
-
-//         const writers = comic.creators.items.filter(creator => creator.role === "writer");
-//         const writerNames = writers.map(writer => writer.name).join(', ');
-
-//         if (comic.textObjects && comic.textObjects.length > 0) {
-//             $(".comicDescription").innerHTML += `
-//             <div>
-//                 <img src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-//             </div>
-//             <div>
-//                 <p>${comic.title}</p>
-//                 <p>Publicado:</p>
-//                 <p>${formattedDate}</p>
-//                 <p>Guionistas: </p>
-//                 <spam>${writerNames}</spam>
-//                 <p>Descripción: </p>
-//                 <spam>${comic.textObjects[0].text}<spam>
-//             </div>
-//             <div>
-//                 <p>Personajes</p>
-//                 <p># results</p>
-//                 <div>
-//                     <img src="#" alt="characterCover">
-//                     <p class="characterTitle font-semibold"></p>
-//                 </div>
-//             </div>
-//             `
-//         }
-//     }
-// }
-
 
 const initializeApp = () => {
     getMarvelComics()
