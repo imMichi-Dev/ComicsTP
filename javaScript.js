@@ -44,26 +44,22 @@ function renderComics() {
         if(type=="characters"){
             console.log("holi")
             $(".mainTable").innerHTML += `
-
-                <div class="itemBox" onclick="getCharacterId(${comic.id})">
-                        <div class="w-48 items-center m-8">
-                            <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
-                        </div>
-                        <p class="comicTitle font-semibold">${comic.name}</p>
-                </div>  
-  
+                    <div class="itemBox min-w-40 max-w-48 m-5" onclick="getCharacterId(${comic.id})">
+                            <div class="w-48 items-center m-8">
+                                <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
+                            </div>
+                            <p class="comicTitle font-semibold">${comic.name}</p>
+                    </div> 
                     `
         }else{
             console.log("holi")
             $(".mainTable").innerHTML += `
-  
-                <div class = "itemBox" onclick="getComicId(${comic.id})">
-                        <div class="w-48 items-center">
-                            <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-                        </div>
-                        <p class="comicTitle font-semibold">${comic.title}</p>
-                </div>     
-
+                    <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
+                            <div class="w-48 items-center">
+                                <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
+                            </div>
+                            <p class="comicTitle font-semibold">${comic.title}</p>
+                    </div>     
                     `
         }
     })
@@ -127,32 +123,32 @@ async function getCharacterId(id){
 }
 
 function printCharacterDescription (datos)  {
-            clearTable(".mainTable")
-            for(const dato of datos){
-            if (dato.description && dato.description.length > 0) {
-                $(".descriptionTable").innerHTML += `
-                <div class="flex flex-col w-full">
-                    <div class="flex flex-row justify-start w-full">
-                        <div >
-                            <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
-                        </div>
-                        <div class="text-left ml-6">
-                            <p class="font-bold">${dato.name}</p>
-                            <spam>${dato.description}<spam>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="text-left">Personajes</p>
-                        <p class="text-left"># results</p>
-                        <div class="flex flex-row justify-start">
-                            <img src="#" alt="characterCover">
-                            <p class="characterTitle font-semibold class="text-left""></p>
-                        </div>
-                    </div>
+    clearTable(".mainTable")
+    for(const dato of datos){
+    if (dato.description && dato.description.length > 0) {
+        $(".mainTable").innerHTML += `
+        <div class="flex flex-col w-full">
+            <div class="flex flex-row justify-start w-full">
+                <div class="min-w-48 max-w-80">
+                    <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
                 </div>
-                `
-            }}
-        }
+                <div class="text-left ml-6">
+                    <p class="font-bold">${dato.name}</p>
+                    <spam>${dato.description}<spam>
+                </div>
+            </div>
+            <div>
+                <p class="text-left font-bold">Personajes</p>
+                <p class="text-left"># results</p>
+                <div class="flex flex-row justify-start">
+                    <img src="#" alt="characterCover">
+                    <p class="characterTitle font-semibold class="text-left""></p>
+                </div>
+            </div>
+        </div>
+        `
+    }}
+}
 
 async function getComicId(id){
     try {
@@ -164,46 +160,68 @@ async function getComicId(id){
     }
     printComicDescription(datos)
 }
+async function getComicCharacters(id) {
+    try {
+        const response = await fetch(`https://gateway.marvel.com/v1/public/comics/${comicId}/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`);
+        const data = await response.json();
+        const characters = data.data.results;
+        return characters;
+    } catch (error) {
+        console.error(error);
+        return []; 
+    }
+}
 
 function printComicDescription (datos)  {
-            clearTable(".mainTable")
-            for(const dato of datos){
-            const comicDate = dato.dates.find(date => date.type === "onsaleDate").date;
-            const formattedDate = new Date(comicDate).toDateString();
-    
-            const writers = dato.creators.items.filter(creator => creator.role === "writer");
-            const writerNames = writers.map(writer => writer.name).join(', ');
-    
-            if (dato.textObjects && dato.textObjects.length > 0) {
-                $(".descriptionTable").innerHTML += `
-                <div class="flex flex-col w-full">
-                    <div class="flex flex-row justify-start w-full">
-                        <div>
-                            <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
-                        </div>
-                        <div class="text-left ml-6">
-                            <p class="font-bold">${dato.title}</p>
-                            <p class="font-bold">Publicado:</p>
-                            <p>${formattedDate}</p>
-                            <p class="font-bold">Guionistas: </p>
-                            <spam>${writerNames}</spam>
-                            <p class="font-bold">Descripción: </p>
-                            <spam>${dato.textObjects[0].text}<spam>
-                        </div>
-                    </div>
-                    <div class="text-left">
-                        <p>Personajes</p>
-                        <p># results</p>
-                        <div>
-                            <img src="#" alt="characterCover">
-                            <p class="characterTitle font-semibold"></p>
-                        </div>
-                    </div>
+    clearTable(".mainTable")
+    for(const dato of datos){
+    const comicDate = dato.dates.find(date => date.type === "onsaleDate").date;
+    const formattedDate = new Date(comicDate).toDateString();
+
+    const writers = dato.creators.items.filter(creator => creator.role === "writer");
+    const writerNames = writers.map(writer => writer.name).join(', ');
+
+    if (dato.textObjects && dato.textObjects.length > 0) {
+        $(".mainTable").innerHTML += `
+        <div class="flex flex-col">
+            <div class="flex flex-row justify-start w-full">
+                <div class="min-w-48 max-w-80">
+                    <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
                 </div>
-                `
-            }}
-        }
-    
+                <div class="text-left ml-6">
+                    <p class="font-bold">${dato.title}</p>
+                    <p class="font-bold">Publicado:</p>
+                    <p>${formattedDate}</p>
+                    <p class="font-bold">Guionistas: </p>
+                    <spam>${writerNames}</spam>
+                    <p class="font-bold">Descripción: </p>
+                    <spam>${dato.textObjects[0].text}<spam>
+                </div>
+            </div>
+            <div class="text-left">
+                <p>Personajes</p>
+                <p># results</p>
+                <div>
+                    <img src="#" alt="characterCover">
+                    <p class="characterTitle font-semibold"></p>
+                </div>
+            </div>
+        </div>
+        `
+    }}
+}
+function printComicCharacters (){
+    for(const dato of datos)
+    $(".mainTable").innerHTML += `
+    <div class="itemBox" onclick="getCharacterId(${comic.id})">
+            <div class="w-48 items-center m-8">
+                <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
+            </div>
+            <p class="comicTitle font-semibold">${comic.name}</p>
+    </div>  
+        `
+}  
+
 
 
 
