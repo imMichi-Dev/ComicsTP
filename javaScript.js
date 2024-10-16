@@ -22,7 +22,8 @@
 //FETCHING
 async function getMarvelComics() {
     try {
-        const searchData = search ? `&${type = "characters" ? `name` : `title`}StartsWith=${search}` : ""
+        search= $("#searchImput").value 
+        const searchData = search ? `&${type == "characters" ? `name` :`title` }StartsWith=${search}` : ""
         urlAPI =`https://gateway.marvel.com/v1/public/${type}?ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}${searchData}`
         const response = await fetch(urlAPI)
         const data = await response.json()
@@ -36,19 +37,40 @@ async function getMarvelComics() {
 }
 
 //FILTERS
-    $("#orderComic").onchange = function (e) {
-        if (type=="characters" && e.target.value=="title"){
+    function orderByChange () {
+        if (type=="characters" && $("#orderComic").value=="title"){
             orderBy= "name"
             return
-        }else if(type=="characters"&&  e.target.value=="-title") {
+        }else if(type=="characters"&&  $("#orderComic").value=="-title") {
             orderBy= "-name"
             return
         }else{
-            orderBy= e.target.value
+            orderBy= $("#orderComic").value
         }
     }
-    $("#typeComic").onchange = function (e) {
-        type= e.target.value
+    // $("#orderComic").selected = function (e) {
+    //     if (type=="characters" && e.target.value=="title"){
+    //         orderBy= "name"
+    //         return
+    //     }else if(type=="characters"&&  e.target.value=="-title") {
+    //         orderBy= "-name"
+    //         return
+    //     }else{
+    //         orderBy= e.target.value
+    //     }
+    // }
+
+    // function searchValueCondition() {
+        
+
+    // }
+
+
+
+
+
+
+    function TypeChange () {
         if (type=="characters" && orderBy=="title"){
             orderBy= "name"
             return
@@ -56,43 +78,66 @@ async function getMarvelComics() {
             orderBy= "-name"
             return
         }else{
-            orderBy="title"
+            orderBy=$("#orderComic").value
         }
     }
-    $("#searchImput").onchange = function (e) {
-        search = e.target.value
-    }
+    // $("#typeComic").selected = function (e) {
+    //     type= e.target.value
+    //     if (type=="characters" && orderBy=="title"){
+    //         orderBy= "name"
+    //         return
+    //     }else if(type=="characters" && orderBy=="-title") {
+    //         orderBy= "-name"
+    //         return
+    //     }else{
+    //         orderBy="title"
+    //     }
+    // }
+    // $("#searchImput").onchange = function (e) {
+        
+    // }
+
+
+
     $("#search-button").onclick = function (e) {
+
+        console.log(search.value)
+        // searchValueCondition()
+        orderByChange()
+        TypeChange ()
         getMarvelComics()
+      
+        console.log(search.value)
+        console.log(urlAPI)
     }
 //PAGES BUTTONS
 
-$(".page-prev").onclick = function (e) {
-    if (page > 1) {
-        page--
-        offSet -= resultsPerPage
+    $(".page-prev").onclick = function (e) {
+        if (page > 1) {
+            page--
+            offSet -= resultsPerPage
+            getMarvelComics()
+        }
+    };
+    $(".page-next").onclick = function (e) {
+        page++
+        offSet += resultsPerPage
         getMarvelComics()
-    }
-};
-$(".page-next").onclick = function (e) {
-    page++
-    offSet += resultsPerPage
-    getMarvelComics()
-};
+    };
 
-$(".page-first").onclick = function (e) {
-    page = 1
-    offSet = 0
-    getMarvelComics()
-};
+    $(".page-first").onclick = function (e) {
+        page = 1
+        offSet = 0
+        getMarvelComics()
+    };
 
-$(".page-last").onclick = function (e) {
-    const totalPages = Math.ceil(totals / resultsPerPage)
-    page = totalPages
-    offSet = (totalPages - 1) * resultsPerPage
-    getMarvelComics()
-    
-};
+    $(".page-last").onclick = function (e) {
+        const totalPages = Math.ceil(totals / resultsPerPage)
+        page = totalPages
+        offSet = (totalPages - 1) * resultsPerPage
+        getMarvelComics()
+        
+    };
 
 //GETTING ID'S
     async function getComicId(id){
@@ -257,5 +302,6 @@ $(".page-last").onclick = function (e) {
 
 const initializeApp = () => {
     getMarvelComics()
+    console.log(urlAPI)
 }
 window.addEventListener("load", initializeApp)
