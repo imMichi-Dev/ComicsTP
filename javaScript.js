@@ -22,8 +22,9 @@
 //FETCHING
 async function getMarvelComics() {
     try {
-        search= $("#searchImput").value 
-        const searchData = search ? `&${type == "characters" ? `name` :`title` }StartsWith=${search}` : ""
+        const searchValue = `${type == "characters" ? `name` :`title` }StartsWith=`
+        console.log(searchValue.value, "searchValue.value")
+        const searchData = search ? `&${searchValue}${search}` : ""
         urlAPI =`https://gateway.marvel.com/v1/public/${type}?ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}${searchData}`
         const response = await fetch(urlAPI)
         const data = await response.json()
@@ -35,6 +36,7 @@ async function getMarvelComics() {
     }
     renderComics()
 }
+
 
 //FILTERS
     function orderByChange () {
@@ -48,66 +50,31 @@ async function getMarvelComics() {
             orderBy= $("#orderComic").value
         }
     }
-    // $("#orderComic").selected = function (e) {
-    //     if (type=="characters" && e.target.value=="title"){
-    //         orderBy= "name"
-    //         return
-    //     }else if(type=="characters"&&  e.target.value=="-title") {
-    //         orderBy= "-name"
-    //         return
-    //     }else{
-    //         orderBy= e.target.value
-    //     }
-    // }
-
-    // function searchValueCondition() {
-        
-
-    // }
-
-
-
-
-
 
     function TypeChange () {
         if (type=="characters" && orderBy=="title"){
             orderBy= "name"
+            console.log("characters1")
             return
         }else if(type=="characters" && orderBy=="-title") {
             orderBy= "-name"
+            console.log("characters2")
             return
         }else{
             orderBy=$("#orderComic").value
         }
     }
-    // $("#typeComic").selected = function (e) {
-    //     type= e.target.value
-    //     if (type=="characters" && orderBy=="title"){
-    //         orderBy= "name"
-    //         return
-    //     }else if(type=="characters" && orderBy=="-title") {
-    //         orderBy= "-name"
-    //         return
-    //     }else{
-    //         orderBy="title"
-    //     }
-    // }
-    // $("#searchImput").onchange = function (e) {
-        
-    // }
-
-
-
+ 
     $("#search-button").onclick = function (e) {
+        console.log(search.value)
+        console.log(orderBy.value)
 
-        console.log(search.value)
-        // searchValueCondition()
-        orderByChange()
+        search= $("#searchImput").value 
+        type= $("#typeComic").value
         TypeChange ()
+        orderByChange()
+        
         getMarvelComics()
-      
-        console.log(search.value)
         console.log(urlAPI)
     }
 //PAGES BUTTONS
