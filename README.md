@@ -35,11 +35,10 @@ La API que vamos a utilizar para este proyecto es la de Marvel Cómics.
 
 ##Enlace: 🥰
 
-Dale click al siguiente enlace para acceder [Buscador de Comics](https://im-majo-jojo.github.io/ComicsTP/ "Buscador de Comics")
+Dale click al siguiente enlace para acceder [Buscador de Comics]([https://im-majo-jojo.github.io/ComicsTP/](https://immichi-dev.github.io/ComicsTP/) "Buscador de Comics")
 ### Herramientas usadas: :toolbox:
 
 ![My Skills](https://skillicons.dev/icons?i=vscode,github,git,html,js,md,tailwind) 
 
-### You can reach me at: :star: 🐛
 
-[![Twitter Badge](https://img.shields.io/badge/-@im_majo_jojo-1ca0f1?style=flat&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/Ipenywis)](https://twitter.com/im_majo_jojo) [![Mail Badge](https://img.shields.io/badge/-@im_majo_jojo-e84393?style=flat&labelColor=e84393&logo=instagram&logoColor=white)](https://www.instagram.com/im_majo_jojo/) [![Linkedin Badge](https://img.shields.io/badge/-Maria_Garces-0e76a8?style=flat&labelColor=0e76a8&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maria-jose-g-21ab84188/) [![Mail Badge](https://img.shields.io/badge/-mj.garcest-c0392b?style=flat&labelColor=c0392b&logo=gmail&logoColor=white)](mailto:mj.garcest@gmail.com)
+
