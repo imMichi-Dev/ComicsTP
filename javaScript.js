@@ -186,7 +186,7 @@ async function getMarvelComics() {
     
         $(".mainTable").innerHTML += `
         <div class="flex flex-col">
-            <div class="flex flex-row justify-start w-full">
+            <div class="flex flex-row justify-start w-full ">
                 <div class="min-w-48 max-w-80">
                     <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
                 </div>
@@ -216,7 +216,7 @@ async function getMarvelComics() {
             for (const character of characters) {
                     $(".mainTable").innerHTML += `
                     <div>
-                        <div class="w-48 justify-items-start items-center m-8">
+                        <div class="w-48 justify-items-start items-center m-8" onclick="getCharacterId(${character.id})">
                             <img src="${character.thumbnail.path}.${character.thumbnail.extension}" alt="${character.name}">
                         </div>
                         <p class="comicTitle font-semibold">${character.name}</p>
