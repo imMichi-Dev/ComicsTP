@@ -35,7 +35,7 @@ La API que vamos a utilizar para este proyecto es la de Marvel Cómics.
 
 ##Enlace: 🥰
 
-Dale click al siguiente enlace para acceder [Buscador de Comics]([https://im-majo-jojo.github.io/ComicsTP/](https://immichi-dev.github.io/ComicsTP/) "Buscador de Comics")
+Dale click al siguiente enlace para acceder [Buscador de Comics]((https://immichi-dev.github.io/ComicsTP/) "Buscador de Comics")
 ### Herramientas usadas: :toolbox:
 
 ![My Skills](https://skillicons.dev/icons?i=vscode,github,git,html,js,md,tailwind) 
