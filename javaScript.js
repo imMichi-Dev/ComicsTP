@@ -155,8 +155,8 @@ async function getMarvelComics() {
         datos.forEach((comic) => {
             if(type=="characters"){
                 $(".mainTable").innerHTML += `
-                        <div class="itemBox lg:min-w-40 lg:max-w-48 lg:m-5" onclick="getCharacterId(${comic.id})">
-                                <div class="w-48 lg:items-center lg:m-8 my-5">
+                        <div class="itemBox w-40 lg:m-5" onclick="getCharacterId(${comic.id})">
+                                <div class="w-48 items-center lg:m-8 my-5">
                                     <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
                                 </div>
                                 <p class="comicTitle font-semibold">${comic.name}</p>
@@ -164,8 +164,8 @@ async function getMarvelComics() {
                         `
             }else{
                 $(".mainTable").innerHTML += `
-                        <div class = "itemBox w-700 lg:min-w-40 lg:max-w-48 lg:m-8 my-5" onclick="getComicId(${comic.id})">
-                                <div class="lg:w-48 lg:items-center">
+                        <div class = "itemBox w-30 sm:w-40  sm:px-2 lg:m-5 my-3 " onclick="getComicId(${comic.id})">
+                                <div class=" items-center">
                                     <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
                                 </div>
                                 <p class="comicTitle font-semibold">${comic.title}</p>
