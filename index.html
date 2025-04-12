@@ -16,50 +16,50 @@
         </nav>
     </header>
     <main>
-        <div id="loader" style="display:none;">
-            <img src="spinner.gif" alt="Cargando..." />
-        </div>
         <div>
             <img src="./img/hero.jpg" alt="coverImage" style="object-fit:cover; width: 100%; height: 250px">
         </div>
         <div class="lg:place-content-center lg:m-10 lg:p-10 pt-10">
             <div class="lg:mx-10 lg:px-10 px-5">
                 <div class="flex flex-col lg:flex-row lg:place-content-center"
-                        <div class=" flex flex-col lg:justify-center">
-                            <div class="flex flex-col items-start lg:w-1/2">
-                                <div  >
-                                    <p class="text-xl font-semibold text-slate-600">Búsqueda</p>
-                                </div>
-                                <div class="w-full">
-                                    <input type="text" placeholder="Ingresa tu busqueda" class="w-full" id="searchImput">
-                                </div>
+                    <div class=" flex flex-col lg:justify-center">
+                        <div class="flex flex-col items-start lg:w-1/2">
+                            <div  >
+                                <p class="text-xl font-semibold text-slate-600">Búsqueda</p>
                             </div>
-                            <div class="flex flex-wrap flex-row lg:justify-center items-start lg:items-end lg:w-1/2">
-                                <div class="lg:px-8">
-                                    <label class="font-bold text-slate-600 text-sm">TIPO</label>
-                                    <select name="typeSearch" id="typeComic" class="typeSearch px-4">
-                                        <option class="font-semibold text-base" value="comics">comics</opti
-                                            on>
-                                        <option class="font-semibold text-base" value="characters">personajes</option>
-                                    </select>
-                                </div>
-                                <div class="lg:px-4">
-                                    <label class="font-bold text-slate-600 text-sm">ORDEN</label>
-                                    <select name="orderComic" id="orderComic" class="lg:px-4">
-                                        <option class="font-semibold text-base" value="title" selected>a-z</option>
-                                        <option class="font-semibold text-base" value="-title">z-a</option>
-                                        <option class="font-semibold text-base" value="-modified">más nuevos</option>
-                                        <option class="font-semibold text-base" value="modified">más antiguos</option>
-                                    </select>
-                                </div>
-                                <button class="bg-black text-slate-400 lg:p-2 p-1" id="search-button">Buscar</button>
+                            <div class="w-full">
+                                <input type="text" placeholder="Ingresa tu busqueda" class="w-full" id="searchImput">
                             </div>
                         </div>
+                        <div class="flex flex-wrap flex-row lg:justify-center items-start lg:items-end lg:w-1/2">
+                            <div class="lg:px-8">
+                                <label class="font-bold text-slate-600 text-sm">TIPO</label>
+                                <select name="typeSearch" id="typeComic" class="typeSearch px-4">
+                                    <option class="font-semibold text-base" value="comics">comics</opti
+                                        on>
+                                    <option class="font-semibold text-base" value="characters">personajes</option>
+                                </select>
+                            </div>
+                            <div class="lg:px-4">
+                                <label class="font-bold text-slate-600 text-sm">ORDEN</label>
+                                <select name="orderComic" id="orderComic" class="lg:px-4">
+                                    <option class="font-semibold text-base" value="title" selected>a-z</option>
+                                    <option class="font-semibold text-base" value="-title">z-a</option>
+                                    <option class="font-semibold text-base" value="-modified">más nuevos</option>
+                                    <option class="font-semibold text-base" value="modified">más antiguos</option>
+                                </select>
+                            </div>
+                            <button class="bg-black text-slate-400 lg:p-2 p-1" id="search-button">Buscar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="lg:mx-10 lg:px-10 p-5">
                 <p class="flex text-base font-semibold items-start lg:pl-10 lg:ml-10">Resultados</p>
                 <p class="flex resultsNumber font-medium items-start resultCount lg:px-10 lg:mx-10"> </p>
+            </div>
+            <div class="animate-pulse" id="loader" style="display:none;">
+                <img src="spinner.gif" alt="Cargando..." />
             </div>
             <div class="mainTable flex flex-wrap sm:w-300 justify-center lg:mx-10 lg:px-10 mx-2 px-2 md:max-w-300"></div>
             <div class="m-5">
