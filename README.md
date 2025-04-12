@@ -1,13 +1,13 @@
 [# Buscador de comics
-# Hi there!✨
-## This is Michi-Dev 🖤
+Hi there!✨
+This is Michi-Dev 🖤
 
-###🐾 newHere
-###🌊 wavesCounter
-###🌙 MidnightLover
-###🐱 crazyCatLady
+🐾 newHere
+🌊 wavesCounter
+🌙 MidnightLover
+🐱 crazyCatLady
 
-##Introduccion: 🧜‍♀️
+Introduccion: 🧜‍♀️
 
 Proyecto generador de memes propuesto por Ada. Creación de una aplicación con la que podrás manipular el texto y la imagen de tu meme y usando JavaScript para modificar dinámicamente su contenido y sus propiedades. Cuando quedes conforme, podrás descargar tu meme para usarlo o compartilo donde quieras.
 Proyecto bujscador de comics propuesto por Ada. Creacion de una aplicación que permita listar cómics y personajes de comics, y obtener información sobre los mismos. Para eso utilicé una API REST con datos reales, realicé consultas a la misma pasándole distintos parámetros que permiten personalizar la búsqueda y mostré los datos obtenidos como respuesta.
@@ -26,17 +26,17 @@ Los requisitos mínimos tenidos en cuenta en este proyecto:
     No se debe trabajar en la rama main. En main sólo van a mergearse las demás ramas, por lo que cada commit de main debería ser el merge de una branch de una funcionalidad terminada
     Cada funcionalidad que se agregue debe hacerse mediante un PR (Pull Request)
 
-##Recursos: 👽
+Recursos: 👽
 
     iconos
     Fuentes
 
 La API que vamos a utilizar para este proyecto es la de Marvel Cómics.
 
-##Enlace: 🥰
+Enlace: 🥰
 
 Dale click al siguiente enlace para acceder [Aquí](https://immichi-dev.github.io/ComicsTP/)
-### Herramientas usadas: :toolbox:
+Herramientas usadas: :toolbox:
 
 ![My Skills](https://skillicons.dev/icons?i=vscode,github,git,html,js,md,tailwind) 
 
