@@ -1,4 +1,4 @@
-[# Buscador de comics
+Buscador de comics
 Hi there!✨
 This is Michi-Dev 🖤
 
@@ -14,7 +14,7 @@ Proyecto bujscador de comics propuesto por Ada. Creacion de una aplicación que 
 
 En esta primera entrega del proyecto, desarrollé la estructura, los estilos y las secciones principales.
 
-##Criterios de aceptacion: 🧠
+Criterios de aceptacion: 🧠
 
 Los requisitos mínimos tenidos en cuenta en este proyecto:
 
@@ -34,8 +34,8 @@ Recursos: 👽
 La API que vamos a utilizar para este proyecto es la de Marvel Cómics.
 
 Enlace: 🥰
-
 Dale click al siguiente enlace para acceder [Aquí](https://immichi-dev.github.io/ComicsTP/)
+
 Herramientas usadas: :toolbox:
 
 ![My Skills](https://skillicons.dev/icons?i=vscode,github,git,html,js,md,tailwind) 
