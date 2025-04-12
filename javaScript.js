@@ -22,17 +22,21 @@
 //FETCHING
 async function getMarvelComics() {
     try {
+        $("#loader").style.display = "block"
         const searchValue = `${type == "characters" ? `name` :`title` }StartsWith=`
         console.log(searchValue.value, "searchValue.value")
         const searchData = search ? `&${searchValue}${search}` : ""
         urlAPI =`https://gateway.marvel.com/v1/public/${type}?ts=${ts}&apikey=${publicKey}&hash=${hash}&offset=${offSet}&orderBy=${orderBy}${searchData}`
         const response = await fetch(urlAPI)
         const data = await response.json()
+        $("#loader").style.display = "none"
         datos = data.data.results.filter(comic=>!comic.thumbnail.path.includes("image_not_available"))
         totals = data.data.total
         $(".resultCount").textContent = `${totals} Resultados`
     } catch (error) {
-        console.log(error);
+        console.log(error)
+        $("#loader").style.display = "none"
+        $("#loader").innerText = "Error al cargar datos."
     }
     renderComics()
 }
