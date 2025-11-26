@@ -1,45 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- TAILWIND -->
-    <link href="/src/style.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@200;400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- //ICONS -->
-    <script src="https://kit.fontawesome.com/d3c573bd54.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Antonio:wght@200;400;700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "app-bg": "#1a1a1a" /* Fondo de la página (gris muy oscuro) */,
+              "panel-bg": "#262626" /* Fondo del panel central */,
+              "card-bg": "#000000" /* Fondo de las cartas (negro en tu img) */,
+              "text-muted": "#9ca3af",
+            },
+            fontFamily: {
+              antonio: ["Antonio", "sans-serif"],
+              inter: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
     <title>RickAndMortySearcher</title>
-</head>
-<body class="not-italic flex flex-col text-center w-full">
-    <header>
-        <nav class="bg-black text-slate-400">
-            <p class="font-bold">RICK AND MORTY DATABASE</p>
-        </nav>
+  </head>
+  <body class="bg-app-bg text-white font-inter flex flex-col min-h-screen">
+    <header class="w-full py-6 px-8 flex justify-between items-center">
+      <nav class="flex items-center gap-2">
+        <h1 class="font-antonio text-3xl font-bold tracking-wide">
+          RICK AND MORTY DATABASE
+        </h1>
+      </nav>
     </header>
     <main>
-        <div>
-            <div class="searchBar">
-                <form>
-                    <input type="text" class="inputSearch" placeholder="Search character by name">
-                    <button class="searchButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Search
-                    </button>
-                    <select id="typeFilter" class="typeFilter">
-                        <option value="character">character</option>
-                        <option value="episode">episode</option>
-                    </select>
-
-                </form>
-            </div>
-            <div class="caracterCards"></div>
-            <div class="paginationButtons"></div>
+      <div>
+        <div class="searchBar">
+          <form>
+            <input
+              type="text"
+              class="inputSearch"
+              placeholder="Search character by name"
+            />
+            <button class="searchButton">Search</button>
+            <select id="typeFilter" class="typeFilter">
+              <option value="character">character</option>
+              <option value="episode">episode</option>
+            </select>
+            <select id="statusFilter" class="statusFilter">
+              <option value="alive">Vivo</option>
+              <option value="dead">Muerto</option>
+              <option value="unknown">Desconocido</option>
+            </select>
+            <select id="genderFilter" class="genderFilter">
+              <option value="female">Mujer</option>
+              <option value="male">Hombre</option>
+              <option value="genderless">Sin género</option>
+              <option value="unknown">Desconocido</option>
+            </select>
+          </form>
         </div>
+        <div class="caracterCards"></div>
+        <div class="paginationButtons"></div>
+      </div>
     </main>
     <footer class="bg-black">
-        <p class="text-slate-400">Hecho con <i class="fa-solid fa-heart"></i> por majo jojo</p>
+      <p class="text-slate-400">
+        Hecho con <i class="fa-solid fa-heart"></i> por majo jojo
+      </p>
     </footer>
-    <script src="javaScript.js"></script>
-</body>
+    <!-- <script src="javaScript.js"></script> -->
+  </body>
 </html>
