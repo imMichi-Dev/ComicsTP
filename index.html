@@ -42,80 +42,131 @@
     </header>
     <!-- SEARCH BAR AND FILTERS -->
     <main class="flex-grow container mx-auto px-4 mb-10">
-      <div class="bg-panel-bg rounded-lg shadow-2xl overflow-hidden p-6 max-w-6xl mx-auto">
+      <div
+        class="bg-panel-bg rounded-lg shadow-2xl overflow-hidden p-6 max-w-6xl mx-auto"
+      >
         <div class="searchBar flex flex-col md:flex-row gap-4 mb-6">
           <form>
-            <span class="absolute left-3 top-3 text-gray-500">🔍</span>
             <input
               type="text"
               class="inputSearch w-full bg-gray-100 text-black pl-10 pr-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-white font-medium"
               placeholder="Search character by name"
             />
-            <select id="typeFilter" class="typeFilter bg-gray-700 text-white px-4 py-2 rounded text-sm border border-gray-600 focus:border-white outline-none">
+            <select
+              id="typeFilter"
+              class="typeFilter bg-gray-700 text-white px-4 py-2 rounded text-sm border border-gray-600 focus:border-white outline-none"
+            >
               <option value="character">character</option>
               <option value="episode">episode</option>
             </select>
-            <select id="statusFilter" class="statusFilter bg-gray-700 text-white px-4 py-2 rounded text-sm border border-gray-600 focus:border-white outline-none">
+            <select
+              id="statusFilter"
+              class="statusFilter bg-gray-700 text-white px-4 py-2 rounded text-sm border border-gray-600 focus:border-white outline-none"
+            >
               <option value="alive">Vivo</option>
               <option value="dead">Muerto</option>
               <option value="unknown">Desconocido</option>
             </select>
-            <select id="genderFilter" class="genderFilter bg-gray-700 text-white px-4 py-2 rounded text-sm border border-gray-600 focus:border-white outline-none">
+            <select
+              id="genderFilter"
+              class="genderFilter bg-gray-700 text-white px-4 py-2 rounded text-sm border border-gray-600 focus:border-white outline-none"
+            >
               <option value="female">Mujer</option>
               <option value="male">Hombre</option>
               <option value="genderless">Sin género</option>
               <option value="unknown">Desconocido</option>
             </select>
-            <button type="submit" class="searchButton genderFilter bg-gray-700 text-white px-4 py-2 rounded text-sm border border-gray-600 focus:border-white outline-none">Search</button>
+            <button
+              type="submit"
+              class="searchButton genderFilter bg-gray-700 text-white px-4 py-2 rounded text-sm border border-gray-600 focus:border-white outline-none"
+            >
+              Search
+            </button>
           </form>
         </div>
         <!-- CHARACTERS AND EPISODES CARDS -->
-        <div class="caracterCards grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            <div class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer">
-                    <div class="relative aspect-[3/4] overflow-hidden">
-                        <img src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" alt="Rick" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+
+        <div class="resultCount text-sm text-gray-400"></div>
+        <div
+          class="contentCards grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"
+        >
+          <!-- <div
+            class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer"
+          >
+            <div class="relative aspect-[3/4] overflow-hidden">
+              <img
+                src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
+                alt="Rick"
+                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+              />
+            </div>
+            <div class="p-3">
+              <h3 class="font-inter font-bold text-sm truncate">
+                Rick Sanchez
+              </h3>
+              <div class="flex justify-between items-center mt-1">
+                <span class="text-xs text-gray-400">Dead</span>
+              </div>
+            </div>
+          </div> -->
+
+
+
+          <!-- <div class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer shadow-lg">
+                    <div class="relative aspect-[3/4] bg-[#111] flex flex-col items-center justify-center group-hover:bg-[#1a1a1a] transition-colors">
+                        <span class="font-antonio text-5xl font-bold text-gray-700 group-hover:text-white transition-colors">S04</span>
+                        <span class="font-antonio text-2xl text-gray-500 group-hover:text-gray-300 transition-colors">E01</span>
                     </div>
                     <div class="p-3">
-                        <h3 class="font-inter font-bold text-sm truncate">Rick Sanchez</h3>
+                        <h3 class="font-inter font-bold text-sm truncate text-gray-200">Edge of Tomorty...</h3>
                         <div class="flex justify-between items-center mt-1">
-                            <span class="text-xs text-gray-400">Dead</span>
+                            <span class="text-xs text-gray-500">Nov 10, 2019</span>
+                            <span class="text-xs text-gray-600">📺</span>
                         </div>
                     </div>
-                </div>
+                  </div> -->
+
+
+
+
+
+
+
 
         </div>
         <!-- PAGINATION -->
         <div class="paginationButtons">
-            <div class="flex justify-center items-center gap-4 mt-8 text-sm text-gray-400">
-                <button class="hover:text-white">&lt; Anterior</button>
-                <span class="text-white">Pág. 1 de 42</span>
-                <button class="hover:text-white">Siguiente &gt;</button>
-            </div>
+          <div
+            class="flex justify-center items-center gap-4 mt-8 text-sm text-gray-400"
+          >
+            <button class="hover:text-white">&lt; Anterior</button>
+            <span class="text-white">Pág. 1 de 42</span>
+            <button class="hover:text-white">Siguiente &gt;</button>
+          </div>
         </div>
       </div>
     </main>
     <!-- FOOTER -->
     <footer class="bg-black py-10 border-t border-gray-800 text-sm">
-        <div class="container mx-auto px-4 max-w-6xl">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">  
-                <div>
-                    <h4 class="text-white font-bold mb-4">Enlaces Rápidos</h4>
-                    <ul class="space-y-2 text-gray-500">
-                        <li><a href="#" class="hover:text-white">API Docs</a></li>
-                        <li><a href="#" class="hover:text-white">GitHub</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">Contact</h4>
-                    <ul class="space-y-2 text-gray-500">
-                        <li><a href="#" class="hover:text-white">Linkedin</a></li>
-                        <li><a href="#" class="hover:text-white">Email</a></li>
-                    </ul>
-                </div>
-            </div>
+      <div class="container mx-auto px-4 max-w-6xl">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h4 class="text-white font-bold mb-4">Enlaces Rápidos</h4>
+            <ul class="space-y-2 text-gray-500">
+              <li><a href="#" class="hover:text-white">API Docs</a></li>
+              <li><a href="#" class="hover:text-white">GitHub</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-white font-bold mb-4">Contact</h4>
+            <ul class="space-y-2 text-gray-500">
+              <li><a href="#" class="hover:text-white">Linkedin</a></li>
+              <li><a href="#" class="hover:text-white">Email</a></li>
+            </ul>
+          </div>
         </div>
+      </div>
     </footer>
-    <!-- <script src="javaScript.js"></script> -->
+    <script src="javaScript.js"></script>
   </body>
 </html>
