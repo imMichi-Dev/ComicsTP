@@ -14,7 +14,7 @@ let totals = 0;
 let datos = [];
 
 //FETCHING
-async function getRAMCharacters() {
+async function getRAMContent() {
   try {
     //  $("#loader").style.display = "block"
     urlAPI = `https://rickandmortyapi.com/api/${type}`;
@@ -22,7 +22,7 @@ async function getRAMCharacters() {
     const data = await response.json();
     console.log(data);
     datos = data.results
-    totals = data.info.count;
+    totals = data.info.count; 
     console.log(totals);
     $(".resultCount").textContent = `${totals} Resultados`;
   } catch (error) {
@@ -62,18 +62,15 @@ async function getRAMCharacters() {
 //         }
 //     }
 
-//     $("#search-button").onclick = function (e) {
-//         console.log(search.value)
-//         console.log(orderBy.value)
-
-//         search= $("#searchImput").value
-//         type= $("#typeComic").value
-//         TypeChange ()
-//         orderByChange()
-
-//         getMarvelComics()
-//         console.log(urlAPI)
-//     }
+    $("#searchButton").onclick = function (e) {
+      e.preventDefault();
+        console.log(search.value)
+        search= $("#inputSearch").value
+        type= $("#typeFilter").value
+      
+        getRAMContent()
+        console.log(urlAPI)
+    }
 
 // //PAGES BUTTONS
 //     $(".page-prev").onclick = function (e) {
@@ -155,10 +152,8 @@ async function getRAMCharacters() {
 // //RENDERS
      function renderCharacters() {
         console.log("holi 2");
-        
          clearTable(".contentCards")
-         datos.forEach((character) => {
-            console.log("holi 3");
+         datos.forEach((dato) => {
              if(type=="character"){
                  $(".contentCards").innerHTML += `
 
@@ -167,17 +162,17 @@ async function getRAMCharacters() {
           >
             <div class="relative aspect-[3/4] overflow-hidden">
               <img
-                src="${character.image}"
-                alt="${character.name}"
+                src="${dato.image}"
+                alt="${dato.name}"
                 class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
               />
             </div>
             <div class="p-3">
               <h3 class="font-inter font-bold text-sm truncate">
-                ${character.name}
+                ${dato.name}
               </h3>
               <div class="flex justify-between items-center mt-1">
-                <span class="text-xs text-gray-400">${character.status}</span>
+                <span class="text-xs text-gray-400">${dato.status}</span>
               </div>
             </div>
           </div>
@@ -197,18 +192,18 @@ async function getRAMCharacters() {
 
 
 
-
-
+              console.log("holi episode");
+      
 
                 $(".contentCards").innerHTML += `
                 <div class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer shadow-lg">
                     <div class="relative aspect-[3/4] bg-[#111] flex flex-col items-center justify-center group-hover:bg-[#1a1a1a] transition-colors">
-                        <span class="font-antonio text-5xl font-bold text-gray-700 group-hover:text-white transition-colors">${episode.episode}</span>
+                        <span class="font-antonio text-5xl font-bold text-gray-700 group-hover:text-white transition-colors">${dato.episode}</span>
                     </div>
                     <div class="p-3">
-                        <h3 class="font-inter font-bold text-sm truncate text-gray-200">${episode.name}</h3>
+                        <h3 class="font-inter font-bold text-sm truncate text-gray-200">${dato.name}</h3>
                         <div class="flex justify-between items-center mt-1">
-                            <span class="text-xs text-gray-500">${episode.air_date}</span>
+                            <span class="text-xs text-gray-500">${dato.air_date}</span>
                             <span class="text-xs text-gray-600">📺</span>
                         </div>
                     </div>
@@ -339,7 +334,7 @@ async function getRAMCharacters() {
 //     }
 
 const initializeApp = () => {
-  getRAMCharacters();
+  getRAMContent();
   console.log(urlAPI);
 };
 window.addEventListener("load", initializeApp);
