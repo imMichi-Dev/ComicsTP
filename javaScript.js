@@ -84,30 +84,28 @@ $("#page-next").onclick = function (e) {
   getRAMContent();
 };
 function updatePageNumbers() {
-  $(".pageNumbers").textContent = `Pág. ${page} de ${Math.ceil(
-    totals / 20
-  )}`;
+  $(".pageNumbers").textContent = `Pág. ${page} de ${Math.ceil(totals / 20)}`;
 }
 
-
 // //GETTING ID'S
-//     async function getCharacterId(id){
-//         try {
-//             const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`)
-//             const data = await response.json()
-//             datos = data.results
-//         } catch (error) {
-//             console.log(error);
-//         }
-//         printcharacterDescription(datos);
-//         getComicCharacters(id)
-//     }
+async function getCharacterId(id) {
+  let data;
+  try {
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/character/${id}`
+    );
+    data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(data);
 
+  printcharacterDescription(data);
+  console.log("got it");
 
-
-
-
-
+  //     getCharacterEpisodes(id)
+}
 
 //     async function getCharacterEpisodes(id) {
 //         try {
@@ -120,14 +118,6 @@ function updatePageNumbers() {
 //         }
 //     }
 
-
-
-
-
-
-
-
-
 //     async function getEpisodeId(id){
 //         try {
 //             const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
@@ -139,13 +129,6 @@ function updatePageNumbers() {
 //         printEpisodeDescription(datos)
 //         getEpisodeCharacters(id)
 //     }
-
-
-
-
-
-
-
 
 //     async function getCharacterComics(id) {
 //         try {
@@ -168,10 +151,10 @@ function renderCharacters() {
     if (type == "character") {
       $(".contentCards").innerHTML += `
 
-<div
+          <div
             class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer"
-          >
-            <div class="relative aspect-[3/4] overflow-hidden">
+          onclick="getCharacterId(${dato.id})">
+            <div class="relative aspect-[3/4] overflow-hidden"> 
               <img
                 src="${dato.image}"
                 alt="${dato.name}"
@@ -189,7 +172,7 @@ function renderCharacters() {
           </div>
 `;
 
-  updatePageNumbers();
+      updatePageNumbers();
 
       //                         <div class="itemBox w-30 sm:w-40  sm:px-2 lg:m-5 my-3" onclick="getCharacterId(${comic.id})">
       //                                 <div class=" items-center lg:m-8 my-5">
@@ -215,7 +198,7 @@ function renderCharacters() {
                     </div>
                   </div>
 `;
-  updatePageNumbers();
+      updatePageNumbers();
 
       //                         <div class = "itemBox w-30 sm:w-40  sm:px-2 lg:m-5 my-3" onclick="getComicId(${comic.id})">
       //                                 <div class=" items-center">
@@ -230,142 +213,119 @@ function renderCharacters() {
 
 // CHARACTER DESCRIPTION RENDERS
 
-function printcharacterDescription(datos) {
+function printcharacterDescription(data) {
   clearTable(".contentCards");
-  for (const dato of datos) {
-    //             const comicDate = dato.dates.find(date => date.type === "onsaleDate").date;
-    //             const formattedDate = new Date(comicDate).toDateString();
+  $(".contentCards").classList.add("hidden");
+  $(".resultCount").classList.add("hidden");
+  $(".paginationButtons").classList.add("hidden");
+  $(".characterDescriptionPanel").classList.remove("hidden");
+  $(".characterDescriptionPanel").innerHTML += `
+<div class="bg-app-bg text-white font-inter flex items-center justify-center p-2 md:p-4">
 
-    //             const writers = dato.creators.items.filter(creator => creator.role === "writer");
-    //             const writerNames = writers.map(writer => writer.name).join(', ');
-    $(".contentCards").innerHTML += `
-                          <div class="characterDescriptionPanel">
-          <div class="w-full md:w-2/5 h-[50vh] md:h-auto relative group">
-            <img
-              src="${dato.image}"
-              alt="${dato.name}"
-              class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-            />
+    <div class="bg-panel-bg w-full max-w-5xl rounded-lg shadow-2xl border border-gray-800 overflow-hidden flex flex-col md:flex-row min-h-[550px]">
+        
+        <div class="w-full md:w-5/12 relative group h-96 md:h-auto overflow-hidden">
+            <img src="${data.image}" 
+                 alt="${data.name}" 
+                 class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out">
+            
+            <a href="index.html" class="absolute top-6 left-6 z-20 flex items-center gap-2 bg-card-bg/80 hover:bg-white hover:text-black text-white px-4 py-2 rounded transition-all text-xs font-bold tracking-widest uppercase border border-gray-700">
+                <span>&larr;</span> Volver
+            </a>
+        </div>
 
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-[#292828] via-transparent to-transparent md:hidden"
-            ></div>
-          </div>
+        <div class="w-full md:w-7/12 p-8 md:p-10 flex flex-col relative">
+            
+            <div class="mb-8 border-b border-gray-700 pb-6">
+                <div class="flex items-center gap-3 mb-2">
 
-          <div class="w-full md:w-3/5 p-8 md:p-12 flex flex-col relative">
-            <div class="mb-8">
-              <div class="flex items-center gap-3 mb-2">
-                <span class="text-text-muted text-xs uppercase tracking-widest"
-                  >${dato.status}</span
-                >
-                <span class="text-gray-600">|</span>
-                <span class="text-text-muted text-xs uppercase tracking-widest"
-                  >${dato.species} &bull; ${dato.gender}</span
-                >
-              </div>
+                    <span class="text-green-400 font-bold uppercase tracking-widest text-xs">${data.status}</span>
+                    <span class="text-gray-600">|</span>
+                    <span class="text-text-muted uppercase tracking-widest text-xs">${data.species} &bull; ${data.gender}</span>
+                </div>
 
-              <h1
-                class="font-antonio text-5xl md:text-7xl font-bold leading-none mb-4 text-white"
-              >
-                ${dato.name}
-              </h1>
-
+                <h1 class="font-antonio text-6xl md:text-7xl font-bold text-white mb-2 leading-none">
+                    ${data.name}
+                </h1>
+                
+                <span class="font-mono text-xs text-text-muted bg-card-bg px-2 py-1 rounded border border-gray-800">ID: #00${data.id}</span>
             </div>
 
-            <div
-              class="grid grid-cols-2 gap-6 mb-10 border-t border-gray-700 pt-6"
-            >
-              <div>
-                <span
-                  class="text-gray-500 text-[10px] uppercase tracking-widest block mb-1"
-                  >Origen</span
-                >
-                <p
-                  class="text-lg font-medium hover:text-gray-300 transition cursor-help"
-                >
-                  ${dato.origin.name}
-                </p>
-              </div>
-
-              <div>
-                <span
-                  class="text-gray-500 text-[10px] uppercase tracking-widest block mb-1"
-                  >Ubicación Actual</span
-                >
-                <p
-                  class="text-lg font-medium hover:text-gray-300 transition cursor-help"
-                >
-                  ${dato.location.name}
-                </p>
-              </div>
-
-              <div class="col-span-2">
-                <span
-                  class="text-gray-500 text-[10px] uppercase tracking-widest block mb-1"
-                  >Ficha Creada El</span
-                >
-                <div class="flex items-center gap-2">
-                  <span class="text-gray-400">📅</span>
-                  <p class="text-sm text-gray-300 font-mono">
-                    ${new Date(dato.created).toDateString()}
-                  </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4 mb-8">
+                
+                <div>
+                    <h3 class="text-[10px] uppercase text-text-muted tracking-widest mb-1 font-bold">Origen</h3>
+                    <div class="flex items-center gap-2 text-gray-200">
+                        <span class="text-lg font-medium">${data.origin.name}</span>
+                    </div>
                 </div>
-              </div>
+
+                <div>
+                    <h3 class="text-[10px] uppercase text-text-muted tracking-widest mb-1 font-bold">Ubicación Actual</h3>
+                    <div class="flex items-center gap-2 text-gray-200">
+                        <span>📍</span>
+                        <span class="text-lg font-medium">${data.location.name}</span>
+                    </div>
+                </div>
+
+                <div class="col-span-1 sm:col-span-2 bg-card-bg p-4 rounded border border-gray-800 mt-2">
+                    <h3 class="text-[10px] uppercase text-gray-500 tracking-widest mb-2 font-bold">Registro en Base de Datos</h3>
+                    <div class="flex items-center gap-3 font-mono text-sm text-gray-300">
+                        <span>📅</span>
+                        ${new Date(data.created).toLocaleDateString()}
+                    </div>
+                </div>
             </div>
 
             <div class="mt-auto">
-              <div class="flex justify-between items-end mb-4">
-                <h3 class="font-antonio text-2xl text-white">Apariciones</h3>
-                <span
-                  class="text-xs text-gray-500 bg-black/30 px-2 py-1 rounded"
-                  >${dato.episode.length} Episodios</span
-                >
-              </div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-antonio text-2xl text-white">Episodios</h3>
+                    <span class="text-[10px] font-bold text-gray-500 bg-card-bg px-2 py-1 rounded border border-gray-800">${data.episode.length} CAPS</span>
+                </div>
 
-              <div
-                class="characterEpisodesPanel flex flex-wrap gap-2 max-h-40 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent"
-              >
-                <a
-                  href="#"
-                  class="px-3 py-1 bg-[#1a1a1a] border border-gray-700 rounded text-xs text-gray-400 hover:bg-white hover:text-black hover:border-white transition"
-                  >${dato.episode[0]}</a
-                >
-
-                <span class="px-2 py-1 text-xs text-gray-600 italic"
-                  >...y 41 más</span
-                >
-              </div>
+                <div class="bg-card-bg border border-gray-800 rounded-lg p-4">
+                    
+                    <div class=" charactersEpisodesList flex flex-wrap gap-2 max-h-32 overflow-y-auto pr-2 
+                        [&::-webkit-scrollbar]:w-1.5 
+                        [&::-webkit-scrollbar-track]:bg-panel-bg 
+                        [&::-webkit-scrollbar-thumb]:bg-gray-700 
+                        [&::-webkit-scrollbar-thumb]:rounded-full">
+                        
+                        <a href="#" class="bg-panel-bg border border-gray-700 text-gray-400 px-3 py-1 text-xs rounded hover:bg-white hover:text-black hover:border-white transition-all font-medium">S01E01</a>
+                        <a href="#" class="bg-panel-bg border border-gray-700 text-gray-400 px-3 py-1 text-xs rounded hover:bg-white hover:text-black hover:border-white transition-all font-medium">S01E02</a>
+                        
+                    </div>
+                </div>
             </div>
-          </div>
+
         </div>
+    </div>
 
+</div>`;
 
-
-          `;
-
-    //             <div class="flex flex-col">
-    //                 <div class="flex flex-row justify-start w-full ">
-    //                     <div class="min-w-48 max-w-80">
-    //                         <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
-    //                     </div>
-    //                     <div class="text-left ml-6">
-    //                         <p class="font-bold">${dato.title}</p>
-    //                         <p class="font-bold">Publicado:</p>
-    //                         <p>${formattedDate}</p>
-    //                         <p class="font-bold">Guionistas: </p>
-    //                         <spam>${writerNames}</spam>
-    //                         <p class="font-bold">Descripción: </p>
-    //                         <spam>${dato.description}<spam>
-    //                     </div>
-    //                 </div>
-    //                 <div class="text-left">
-    //                     <p class="font-bold">Personajes</p>
-    //                     <p class="resultCharactersCount"></p>
-    //                 </div>
-    //             </div>
-    //             `
-  }
+  //             <div class="flex flex-col">
+  //                 <div class="flex flex-row justify-start w-full ">
+  //                     <div class="min-w-48 max-w-80">
+  //                         <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
+  //                     </div>
+  //                     <div class="text-left ml-6">
+  //                         <p class="font-bold">${dato.title}</p>
+  //                         <p class="font-bold">Publicado:</p>
+  //                         <p>${formattedDate}</p>
+  //                         <p class="font-bold">Guionistas: </p>
+  //                         <spam>${writerNames}</spam>
+  //                         <p class="font-bold">Descripción: </p>
+  //                         <spam>${dato.description}<spam>
+  //                     </div>
+  //                 </div>
+  //                 <div class="text-left">
+  //                     <p class="font-bold">Personajes</p>
+  //                     <p class="resultCharactersCount"></p>
+  //                 </div>
+  //             </div>
+  //             `
 }
+//}
 
 // CHARACTER EPISODES RENDER
 
