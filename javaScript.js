@@ -83,7 +83,7 @@ function updatePageNumbers() {
 
 // //GETTING ID'S
 async function getCharacterId(id) {
-  let data;
+  let character;
   try {
     const response = await fetch(
       `https://rickandmortyapi.com/api/character/${id}`
@@ -100,32 +100,15 @@ async function getCharacterId(id) {
     printCharacterDescription(data);
   } catch (error) {
     console.log(error);
-  }
-
-  //     getCharacterEpisodes(id)
-}
-
-//     async function getCharacterEpisodes(id) {
-//         try {
-//             const response = await fetch(`https://rickandmortyapi.com/api/character/${id}/episodes`)
-//             const data = await response.json()
-//             const characters = data.results
-//             printCharacterEspisodes(characters)
-//         } catch (error) {
-//             console.error(error)
-//         }
-//     }
+  }}
 
 async function getEpisodeId(id) {
-
-
   let episodes = [];
   try {
     const response = await fetch(
       `https://rickandmortyapi.com/api/episode/[${id}]`
     );
     episodes = await response.json();
-
   } catch (error) {
     console.log(error);
   }
@@ -156,7 +139,6 @@ function renderCharacters() {
   datos.forEach((dato) => {
     if (type == "character") {
       $(".contentCards").innerHTML += `
-
           <div
             class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer"
           onclick="getCharacterId(${dato.id})">
@@ -177,18 +159,8 @@ function renderCharacters() {
             </div>
           </div>
 `;
-
       updatePageNumbers();
-
-      //                         <div class="itemBox w-30 sm:w-40  sm:px-2 lg:m-5 my-3" onclick="getCharacterId(${comic.id})">
-      //                                 <div class=" items-center lg:m-8 my-5">
-      //                                     <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.name}">
-      //                                 </div>
-      //                                 <p class="comicTitle font-semibold">${comic.name}</p>
-      //                         </div>
-      //                         `
     } else {
-
       $(".contentCards").innerHTML += `
                 <div class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer shadow-lg" onclick="getEpisodeId(${dato.id})">
                     <div class="relative aspect-[3/4] bg-[#111] flex flex-col items-center justify-center group-hover:bg-[#1a1a1a] transition-colors">
@@ -204,14 +176,6 @@ function renderCharacters() {
                   </div>
 `;
       updatePageNumbers();
-
-      //                         <div class = "itemBox w-30 sm:w-40  sm:px-2 lg:m-5 my-3" onclick="getComicId(${comic.id})">
-      //                                 <div class=" items-center">
-      //                                     <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-      //                                 </div>
-      //                                 <p class="comicTitle font-semibold">${comic.title}</p>
-      //                         </div>
-      //                         `
     }
   });
 }
@@ -219,9 +183,12 @@ function renderCharacters() {
 // CHARACTER DESCRIPTION RENDERS
 
 function printCharacterDescription(data) {
-
-
-  hideTab([".contentCards", ".resultCount", ".paginationButtons", ".searchForm"]);
+  hideTab([
+    ".contentCards",
+    ".resultCount",
+    ".paginationButtons",
+    ".searchForm",
+  ]);
   showTab([".descriptionPanel"]);
   clearTable(".descriptionPanel");
   $(".descriptionPanel").innerHTML += `
@@ -340,10 +307,14 @@ function printCharacterEspisodes(data) {
   }
 }
 
-
 // EPISODES DESCRIPTION RENDERS
 function printEpisodeDescription(episodes) {
-  hideTab([".contentCards", ".resultCount", ".paginationButtons", ".searchForm", ]);
+  hideTab([
+    ".contentCards",
+    ".resultCount",
+    ".paginationButtons",
+    ".searchForm",
+  ]);
   showTab([".descriptionPanel"]);
   clearTable(".descriptionPanel");
   for (const episode of episodes) {
@@ -357,7 +328,6 @@ function printEpisodeDescription(episodes) {
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-transparent to-transparent"></div>
             
             <div class="z-10 text-center transform group-hover:scale-105 transition-transform duration-500">
-                <span class="block font-antonio text-8xl md:text-9xl font-bold text-white tracking-tighter leading-none">${episode.season}</span>
                 <span class="block font-antonio text-6xl md:text-7xl font-light text-gray-500 tracking-tighter leading-none">${episode.episode}</span>
             </div>
 
@@ -411,7 +381,7 @@ function printEpisodeDescription(episodes) {
 
                 <div class="bg-card-bg border border-gray-800 rounded-lg p-4">
                     
-                    <div class="flex flex-wrap gap-3 max-h-40 overflow-y-auto pr-2 
+                    <div class="episodesCharactersList flex flex-wrap gap-3 max-h-40 overflow-y-auto pr-2 
                         [&::-webkit-scrollbar]:w-1.5 
                         [&::-webkit-scrollbar-track]:bg-panel-bg 
                         [&::-webkit-scrollbar-thumb]:bg-gray-700 
@@ -427,31 +397,6 @@ function printEpisodeDescription(episodes) {
                             <span class="text-xs font-bold">Morty</span>
                         </a>
 
-                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
-                            <img src="https://rickandmortyapi.com/api/character/avatar/3.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
-                            <span class="text-xs font-bold">Summer</span>
-                        </a>
-
-                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
-                            <img src="https://rickandmortyapi.com/api/character/avatar/4.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
-                            <span class="text-xs font-bold">Beth</span>
-                        </a>
-
-                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
-                            <img src="https://rickandmortyapi.com/api/character/avatar/5.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
-                            <span class="text-xs font-bold">Jerry</span>
-                        </a>
-
-                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
-                            <img src="https://rickandmortyapi.com/api/character/avatar/38.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
-                            <span class="text-xs font-bold">Beth Clone</span>
-                        </a>
-                        
-                         <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
-                            <div class="w-8 h-8 rounded-full bg-black flex items-center justify-center text-[10px] text-gray-500 font-bold border border-gray-800 group-hover:border-black">+12</div>
-                            <span class="text-xs font-bold">Más...</span>
-                        </a>
-
                     </div>
                 </div>
             </div>
@@ -461,29 +406,24 @@ function printEpisodeDescription(episodes) {
 
   </div>
         </div>
-
             `;
+            printEpisodesCharacters(episode.characters);
   }
 }
 
-//     function printCharacterComics (comics){
-//         $(".resultComicsCount").textContent = `${comics.length} Resultados`
-//         if(comics.length===0){
-//             $(".mainTable").innerHTML += `<p class="font-bold">No results</p>`
-//         }else{
-//             for (const comic of comics) {
-//                 $(".mainTable").innerHTML += `
-//                 <div class = "itemBox  min-w-40 max-w-48 m-5" onclick="getComicId(${comic.id})">
-//                         <div class="w-48 items-center">
-//                             <img  src="${comic.thumbnail.path}.${comic.thumbnail.extension}" alt="${comic.title}">
-//                         </div>
-//                         <p class="comicTitle font-semibold">${comic.title}</p>
-//                 </div>
-//                 `
-//         }
-//     }
-
-//     }
+function printEpisodesCharacters(characters) {
+  if (characters.length === 0) {
+    $(".episodesCharactersList").innerHTML += `<p class="font-bold">No results</p>`;
+  } else {
+    for (const character of characters) {
+      $(".episodesCharactersList").innerHTML += `
+                                       <a href="detalle.html" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
+                            <img src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
+                            <span class="text-xs font-bold">Rick</span>
+                        </a>`;
+    }
+  }
+}
 
 // TABS VISUALIZATION
 const hideTab = (selectors) => {
@@ -498,10 +438,14 @@ const showTab = (selectors) => {
 };
 function goBackMain(params) {
   hideTab([".descriptionPanel"]);
-  showTab([".contentCards", ".resultCount", ".paginationButtons", ".searchForm"]);
+  showTab([
+    ".contentCards",
+    ".resultCount",
+    ".paginationButtons",
+    ".searchForm",
+  ]);
   console.log("HOLII QUE PASAA");
   //renderCharacters();
-  
 }
 
 const initializeApp = () => {
