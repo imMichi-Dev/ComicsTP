@@ -95,12 +95,21 @@ async function getCharacterId(id) {
       `https://rickandmortyapi.com/api/character/${id}`
     );
     data = await response.json();
-    console.log(data);
+    const episodesId = data.episode
+      .map((eps) => eps.split("/").pop())
+      .join(",");
+    const episode = await getEpisodeId(episodesId);
+    data = {
+      ...data,
+      episode,
+    };
+    console.log(episode);
+    
+    // console.log(Object.keys(dataEpisodesId));
   } catch (error) {
     console.log(error);
   }
   console.log(data);
-
   printcharacterDescription(data);
   console.log("got it");
 
@@ -118,17 +127,24 @@ async function getCharacterId(id) {
 //         }
 //     }
 
-//     async function getEpisodeId(id){
-//         try {
-//             const response = await fetch(`https://rickandmortyapi.com/api/episode/${id}`)
-//             const data = await response.json()
-//             datos = data.results
-//         } catch (error) {
-//             console.log(error);
-//         }
-//         printEpisodeDescription(datos)
-//         getEpisodeCharacters(id)
-//     }
+async function getEpisodeId(id) {
+  let episodes = [];
+  try {
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/episode/[${id}]`
+    );
+    episodes = await response.json();
+    console.log(episodes, "indicadorsito");
+
+    return episodes;
+  } catch (error) {
+    console.log(error);
+  }
+
+  //printEpisodeDescription(datos)
+  //getEpisodeCharacters(id)
+  return episodes;
+}
 
 //     async function getCharacterComics(id) {
 //         try {
@@ -214,11 +230,9 @@ function renderCharacters() {
 // CHARACTER DESCRIPTION RENDERS
 
 function printcharacterDescription(data) {
-  clearTable(".contentCards");
-  $(".contentCards").classList.add("hidden");
-  $(".resultCount").classList.add("hidden");
-  $(".paginationButtons").classList.add("hidden");
-  $(".characterDescriptionPanel").classList.remove("hidden");
+  hideTab([".contentCards", ".resultCount", ".paginationButtons"]);
+  showTab([".characterDescriptionPanel"]);
+  clearTable(".characterDescriptionPanel");
   $(".characterDescriptionPanel").innerHTML += `
 <div class="bg-app-bg text-white font-inter flex items-center justify-center p-2 md:p-4">
 
@@ -229,9 +243,9 @@ function printcharacterDescription(data) {
                  alt="${data.name}" 
                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out">
             
-            <a href="index.html" class="absolute top-6 left-6 z-20 flex items-center gap-2 bg-card-bg/80 hover:bg-white hover:text-black text-white px-4 py-2 rounded transition-all text-xs font-bold tracking-widest uppercase border border-gray-700">
+            <div onclick="goBackMain()" class="absolute top-6 left-6 z-20 flex items-center gap-2 bg-card-bg/80 hover:bg-white hover:text-black text-white px-4 py-2 rounded transition-all text-xs font-bold tracking-widest uppercase border border-gray-700">
                 <span>&larr;</span> Volver
-            </a>
+            </div>
         </div>
 
         <div class="w-full md:w-7/12 p-8 md:p-10 flex flex-col relative">
@@ -239,16 +253,22 @@ function printcharacterDescription(data) {
             <div class="mb-8 border-b border-gray-700 pb-6">
                 <div class="flex items-center gap-3 mb-2">
 
-                    <span class="text-green-400 font-bold uppercase tracking-widest text-xs">${data.status}</span>
+                    <span class="text-green-400 font-bold uppercase tracking-widest text-xs">${
+                      data.status
+                    }</span>
                     <span class="text-gray-600">|</span>
-                    <span class="text-text-muted uppercase tracking-widest text-xs">${data.species} &bull; ${data.gender}</span>
+                    <span class="text-text-muted uppercase tracking-widest text-xs">${
+                      data.species
+                    } &bull; ${data.gender}</span>
                 </div>
 
                 <h1 class="font-antonio text-6xl md:text-7xl font-bold text-white mb-2 leading-none">
                     ${data.name}
                 </h1>
                 
-                <span class="font-mono text-xs text-text-muted bg-card-bg px-2 py-1 rounded border border-gray-800">ID: #00${data.id}</span>
+                <span class="font-mono text-xs text-text-muted bg-card-bg px-2 py-1 rounded border border-gray-800">ID: #00${
+                  data.id
+                }</span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4 mb-8">
@@ -256,7 +276,9 @@ function printcharacterDescription(data) {
                 <div>
                     <h3 class="text-[10px] uppercase text-text-muted tracking-widest mb-1 font-bold">Origen</h3>
                     <div class="flex items-center gap-2 text-gray-200">
-                        <span class="text-lg font-medium">${data.origin.name}</span>
+                        <span class="text-lg font-medium">${
+                          data.origin.name
+                        }</span>
                     </div>
                 </div>
 
@@ -264,7 +286,9 @@ function printcharacterDescription(data) {
                     <h3 class="text-[10px] uppercase text-text-muted tracking-widest mb-1 font-bold">Ubicación Actual</h3>
                     <div class="flex items-center gap-2 text-gray-200">
                         <span>📍</span>
-                        <span class="text-lg font-medium">${data.location.name}</span>
+                        <span class="text-lg font-medium">${
+                          data.location.name
+                        }</span>
                     </div>
                 </div>
 
@@ -280,7 +304,9 @@ function printcharacterDescription(data) {
             <div class="mt-auto">
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="font-antonio text-2xl text-white">Episodios</h3>
-                    <span class="text-[10px] font-bold text-gray-500 bg-card-bg px-2 py-1 rounded border border-gray-800">${data.episode.length} CAPS</span>
+                    <span class="text-[10px] font-bold text-gray-500 bg-card-bg px-2 py-1 rounded border border-gray-800">${
+                      data.episode.length
+                    } CAPS</span>
                 </div>
 
                 <div class="bg-card-bg border border-gray-800 rounded-lg p-4">
@@ -291,8 +317,7 @@ function printcharacterDescription(data) {
                         [&::-webkit-scrollbar-thumb]:bg-gray-700 
                         [&::-webkit-scrollbar-thumb]:rounded-full">
                         
-                        <a href="#" class="bg-panel-bg border border-gray-700 text-gray-400 px-3 py-1 text-xs rounded hover:bg-white hover:text-black hover:border-white transition-all font-medium">S01E01</a>
-                        <a href="#" class="bg-panel-bg border border-gray-700 text-gray-400 px-3 py-1 text-xs rounded hover:bg-white hover:text-black hover:border-white transition-all font-medium">S01E02</a>
+  
                         
                     </div>
                 </div>
@@ -324,25 +349,29 @@ function printcharacterDescription(data) {
   //                 </div>
   //             </div>
   //             `
+  printCharacterEspisodes(data);
 }
 //}
 
 // CHARACTER EPISODES RENDER
 
-function printCharacterEspisodes(characters) {
-  if (dato.episode.length === 0) {
+function printCharacterEspisodes(data) {
+  console.log("meeh");
+
+  if (data.episode.length === 0) {
     $(
-      ".characterEpisodesPanel"
+      ".charactersEpisodesList"
     ).innerHTML += `<p class="font-bold">No results</p>`;
   } else {
-    console.log("holi episodesss!!!");
+    // console.log(data.episode.name);
+    for (const episode of data.episode) {
+      console.log(episode);
 
-    for (const character of characters) {
-      $(".characterEpisodesPanel").innerHTML += `
+      $(".charactersEpisodesList").innerHTML += `
                     <a
-                  href="#"
+                  href="${episode.url}"
                   class="px-3 py-1 bg-[#1a1a1a] border border-gray-700 rounded text-xs text-gray-400 hover:bg-white hover:text-black hover:border-white transition"
-                  >${dato.episode[0]}</a
+                  >${episode.episode}</a
                 >`;
     }
   }
@@ -389,6 +418,22 @@ function printCharacterEspisodes(characters) {
 //     }
 
 //     }
+
+// TABS VISUALIZATION
+const hideTab = (selectors) => {
+  for (const selector of selectors) {
+    $(selector).classList.add("hidden");
+  }
+};
+const showTab = (selectors) => {
+  for (const selector of selectors) {
+    $(selector).classList.remove("hidden");
+  }
+};
+function goBackMain(params) {
+  hideTab([".characterDescriptionPanel", ".charactersEpisodesList"]);
+  showTab([".contentCards", ".resultCount", ".paginationButtons"]);
+}
 
 const initializeApp = () => {
   getRAMContent();
