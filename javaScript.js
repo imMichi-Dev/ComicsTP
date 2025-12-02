@@ -20,17 +20,14 @@ async function getRAMContent() {
     urlAPI = `https://rickandmortyapi.com/api/${type}?page=${page}`;
     const response = await fetch(urlAPI);
     const data = await response.json();
-    console.log(data);
     datos = data.results;
     totals = data.info.count;
-    console.log(totals);
     $(".resultCount").textContent = `${totals} Resultados`;
   } catch (error) {
     console.log(error);
     //         $("#loader").style.display = "none"
     //         $("#loader").innerText = "Error al cargar datos."
   }
-  console.log("holi");
   renderCharacters();
   updatePageNumbers();
 }
@@ -51,11 +48,9 @@ async function getRAMContent() {
 //     function TypeChange () {
 //         if (type=="characters" && orderBy=="title"){
 //             orderBy= "name"
-//             console.log("characters1")
 //             return
 //         }else if(type=="characters" && orderBy=="-title") {
 //             orderBy= "-name"
-//             console.log("characters2")
 //             return
 //         }else{
 //             orderBy=$("#orderComic").value
@@ -64,7 +59,6 @@ async function getRAMContent() {
 
 $("#searchButton").onclick = function (e) {
   e.preventDefault();
-  console.log(search.value);
   search = $("#inputSearch").value;
   type = $("#typeFilter").value;
 
@@ -103,15 +97,10 @@ async function getCharacterId(id) {
       ...data,
       episode,
     };
-    console.log(episode);
-    
-    // console.log(Object.keys(dataEpisodesId));
+    printCharacterDescription(data);
   } catch (error) {
     console.log(error);
   }
-  console.log(data);
-  printcharacterDescription(data);
-  console.log("got it");
 
   //     getCharacterEpisodes(id)
 }
@@ -128,22 +117,24 @@ async function getCharacterId(id) {
 //     }
 
 async function getEpisodeId(id) {
+
+
   let episodes = [];
   try {
     const response = await fetch(
       `https://rickandmortyapi.com/api/episode/[${id}]`
     );
     episodes = await response.json();
-    console.log(episodes, "indicadorsito");
 
-    return episodes;
   } catch (error) {
     console.log(error);
   }
 
-  //printEpisodeDescription(datos)
-  //getEpisodeCharacters(id)
+  printEpisodeDescription(episodes);
+
   return episodes;
+
+  //getEpisodeCharacters(id)
 }
 
 //     async function getCharacterComics(id) {
@@ -161,7 +152,6 @@ async function getEpisodeId(id) {
 
 // CHARACTERS AND EPISODES RENDER
 function renderCharacters() {
-  console.log("holi 2");
   clearTable(".contentCards");
   datos.forEach((dato) => {
     if (type == "character") {
@@ -198,10 +188,9 @@ function renderCharacters() {
       //                         </div>
       //                         `
     } else {
-      console.log("holi episode");
 
       $(".contentCards").innerHTML += `
-                <div class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer shadow-lg">
+                <div class="group bg-card-bg border border-gray-800 rounded overflow-hidden hover:border-gray-500 transition-all cursor-pointer shadow-lg" onclick="getEpisodeId(${dato.id})">
                     <div class="relative aspect-[3/4] bg-[#111] flex flex-col items-center justify-center group-hover:bg-[#1a1a1a] transition-colors">
                         <span class="font-antonio text-5xl font-bold text-gray-700 group-hover:text-white transition-colors">${dato.episode}</span>
                     </div>
@@ -229,11 +218,13 @@ function renderCharacters() {
 
 // CHARACTER DESCRIPTION RENDERS
 
-function printcharacterDescription(data) {
-  hideTab([".contentCards", ".resultCount", ".paginationButtons"]);
-  showTab([".characterDescriptionPanel"]);
-  clearTable(".characterDescriptionPanel");
-  $(".characterDescriptionPanel").innerHTML += `
+function printCharacterDescription(data) {
+
+
+  hideTab([".contentCards", ".resultCount", ".paginationButtons", ".searchForm"]);
+  showTab([".descriptionPanel"]);
+  clearTable(".descriptionPanel");
+  $(".descriptionPanel").innerHTML += `
 <div class="bg-app-bg text-white font-inter flex items-center justify-center p-2 md:p-4">
 
     <div class="bg-panel-bg w-full max-w-5xl rounded-lg shadow-2xl border border-gray-800 overflow-hidden flex flex-col md:flex-row min-h-[550px]">
@@ -305,7 +296,7 @@ function printcharacterDescription(data) {
                 <div class="flex items-center justify-between mb-3">
                     <h3 class="font-antonio text-2xl text-white">Episodios</h3>
                     <span class="text-[10px] font-bold text-gray-500 bg-card-bg px-2 py-1 rounded border border-gray-800">${
-                      data.episode.length
+                      data?.episode?.length || 0
                     } CAPS</span>
                 </div>
 
@@ -327,46 +318,18 @@ function printcharacterDescription(data) {
     </div>
 
 </div>`;
-
-  //             <div class="flex flex-col">
-  //                 <div class="flex flex-row justify-start w-full ">
-  //                     <div class="min-w-48 max-w-80">
-  //                         <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.title}">
-  //                     </div>
-  //                     <div class="text-left ml-6">
-  //                         <p class="font-bold">${dato.title}</p>
-  //                         <p class="font-bold">Publicado:</p>
-  //                         <p>${formattedDate}</p>
-  //                         <p class="font-bold">Guionistas: </p>
-  //                         <spam>${writerNames}</spam>
-  //                         <p class="font-bold">Descripción: </p>
-  //                         <spam>${dato.description}<spam>
-  //                     </div>
-  //                 </div>
-  //                 <div class="text-left">
-  //                     <p class="font-bold">Personajes</p>
-  //                     <p class="resultCharactersCount"></p>
-  //                 </div>
-  //             </div>
-  //             `
   printCharacterEspisodes(data);
 }
-//}
 
 // CHARACTER EPISODES RENDER
 
 function printCharacterEspisodes(data) {
-  console.log("meeh");
-
   if (data.episode.length === 0) {
     $(
       ".charactersEpisodesList"
     ).innerHTML += `<p class="font-bold">No results</p>`;
   } else {
-    // console.log(data.episode.name);
     for (const episode of data.episode) {
-      console.log(episode);
-
       $(".charactersEpisodesList").innerHTML += `
                     <a
                   href="${episode.url}"
@@ -377,28 +340,131 @@ function printCharacterEspisodes(data) {
   }
 }
 
-//     function printCharacterDescription (datos)  {
-//         clearTable(".mainTable")
-//         for(const dato of datos){
-//             $(".mainTable").innerHTML += `
-//             <div class="flex flex-col w-full">
-//                 <div class="flex flex-row justify-start w-full">
-//                     <div class="min-w-48 max-w-80">
-//                         <img src="${dato.thumbnail.path}.${dato.thumbnail.extension}" alt="${dato.name}">
-//                     </div>
-//                     <div class="text-left ml-6">
-//                         <p class="font-bold">${dato.name}</p>
-//                         <spam>${dato.description}<spam>
-//                     </div>
-//                 </div>
-//                 <div class="text-left">
-//                     <p class="font-bold">Comics</p>
-//                     <p class="resultComicsCount"></p>
-//                 </div>
-//             </div>
-//             `
-//         }
-//     }
+
+// EPISODES DESCRIPTION RENDERS
+function printEpisodeDescription(episodes) {
+  hideTab([".contentCards", ".resultCount", ".paginationButtons", ".searchForm", ]);
+  showTab([".descriptionPanel"]);
+  clearTable(".descriptionPanel");
+  for (const episode of episodes) {
+    $(".descriptionPanel").innerHTML += `
+        <div class="bg-app-bg text-white font-inter min-h-screen flex items-center justify-center p-4 md:p-8">
+
+    <div class="bg-panel-bg w-full max-w-5xl rounded-lg shadow-2xl border border-gray-800 overflow-hidden flex flex-col md:flex-row min-h-[500px]">
+        
+        <div class="w-full md:w-5/12 relative group h-64 md:h-auto overflow-hidden bg-card-bg flex flex-col items-center justify-center border-r border-gray-800">
+            
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-transparent to-transparent"></div>
+            
+            <div class="z-10 text-center transform group-hover:scale-105 transition-transform duration-500">
+                <span class="block font-antonio text-8xl md:text-9xl font-bold text-white tracking-tighter leading-none">${episode.season}</span>
+                <span class="block font-antonio text-6xl md:text-7xl font-light text-gray-500 tracking-tighter leading-none">${episode.episode}</span>
+            </div>
+
+            <div class="mt-6 z-10">
+                <span class="text-[10px] uppercase tracking-[0.3em] text-green-400 border border-green-400/30 px-3 py-1 rounded-full">Season Premiere</span>
+            </div>
+            
+            <div onclick="goBackMain()" class="absolute top-6 left-6 z-20 flex items-center gap-2 bg-card-bg/80 hover:bg-white hover:text-black text-white px-4 py-2 rounded transition-all text-xs font-bold tracking-widest uppercase border border-gray-700">
+                <span>&larr;</span> Volver
+            </div>
+        </div>
+
+        <div class="w-full md:w-7/12 p-8 md:p-10 flex flex-col relative">
+            
+            <div class="mb-8 border-b border-gray-700 pb-6">
+                <div class="flex items-center gap-2 mb-2">
+                     <span class="text-xl">📺</span>
+                     <span class="text-text-muted uppercase tracking-widest text-xs font-bold">Detalles del Episodio</span>
+                </div>
+
+                <h1 class="font-antonio text-5xl md:text-6xl font-bold text-white mb-2 leading-tight">
+                    ${episode.name}
+                </h1>
+
+            </div>
+
+            <div class="mb-10">
+                <h3 class="text-[10px] uppercase text-gray-500 tracking-widest mb-2 font-bold">Fecha de Emisión (Air Date)</h3>
+                
+                <div class="bg-card-bg p-4 rounded border border-gray-800 inline-block w-full">
+                    <div class="flex items-center gap-4">
+                        
+                        <div class="p-2 bg-panel-bg rounded text-gray-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <span class="text-[10px] text-gray-500 uppercase font-bold">Estreno TV</span>
+                            <span class="font-mono text-base text-gray-200">${episode.air_date}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-auto">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-antonio text-2xl text-white">Personajes</h3>
+                    <span class="text-[10px] font-bold text-gray-500 bg-card-bg px-2 py-1 rounded border border-gray-800">${episode.characters.length} EN ESCENA</span>
+                </div>
+
+                <div class="bg-card-bg border border-gray-800 rounded-lg p-4">
+                    
+                    <div class="flex flex-wrap gap-3 max-h-40 overflow-y-auto pr-2 
+                        [&::-webkit-scrollbar]:w-1.5 
+                        [&::-webkit-scrollbar-track]:bg-panel-bg 
+                        [&::-webkit-scrollbar-thumb]:bg-gray-700 
+                        [&::-webkit-scrollbar-thumb]:rounded-full">
+                        
+                        <a href="detalle.html" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
+                            <img src="https://rickandmortyapi.com/api/character/avatar/1.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
+                            <span class="text-xs font-bold">Rick</span>
+                        </a>
+
+                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
+                            <img src="https://rickandmortyapi.com/api/character/avatar/2.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
+                            <span class="text-xs font-bold">Morty</span>
+                        </a>
+
+                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
+                            <img src="https://rickandmortyapi.com/api/character/avatar/3.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
+                            <span class="text-xs font-bold">Summer</span>
+                        </a>
+
+                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
+                            <img src="https://rickandmortyapi.com/api/character/avatar/4.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
+                            <span class="text-xs font-bold">Beth</span>
+                        </a>
+
+                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
+                            <img src="https://rickandmortyapi.com/api/character/avatar/5.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
+                            <span class="text-xs font-bold">Jerry</span>
+                        </a>
+
+                        <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
+                            <img src="https://rickandmortyapi.com/api/character/avatar/38.jpeg" class="w-8 h-8 rounded-full grayscale group-hover:grayscale-0">
+                            <span class="text-xs font-bold">Beth Clone</span>
+                        </a>
+                        
+                         <a href="#" class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
+                            <div class="w-8 h-8 rounded-full bg-black flex items-center justify-center text-[10px] text-gray-500 font-bold border border-gray-800 group-hover:border-black">+12</div>
+                            <span class="text-xs font-bold">Más...</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+  </div>
+        </div>
+
+            `;
+  }
+}
 
 //     function printCharacterComics (comics){
 //         $(".resultComicsCount").textContent = `${comics.length} Resultados`
@@ -431,8 +497,11 @@ const showTab = (selectors) => {
   }
 };
 function goBackMain(params) {
-  hideTab([".characterDescriptionPanel", ".charactersEpisodesList"]);
-  showTab([".contentCards", ".resultCount", ".paginationButtons"]);
+  hideTab([".descriptionPanel"]);
+  showTab([".contentCards", ".resultCount", ".paginationButtons", ".searchForm"]);
+  console.log("HOLII QUE PASAA");
+  //renderCharacters();
+  
 }
 
 const initializeApp = () => {
