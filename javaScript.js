@@ -7,7 +7,6 @@ const clearTable = (selector) => ($(selector).innerHTML = "");
 const urlBase = `https://rickandmortyapi.com/api/`;
 
 let type = "character";
-let search = "";
 let chrStatus = "";
 let chrGender = "";
 let chrName = "";
@@ -45,39 +44,14 @@ async function getRAMContent() {
               $("#statusFilter").disabled = false
               $("#genderFilter").disabled = false
         }
-
-
-
-
-//         if (type=="characters" && $("#orderComic").value=="title"){
-//             orderBy= "name"
-//             return
-//         }else if(type=="characters"&&  $("#orderComic").value=="-title") {
-//             orderBy= "-name"
-//             return
-//         }else{
-//             orderBy= $("#orderComic").value
-//         }
     }
-
-//     function TypeChange () {
-//         if (type=="characters" && orderBy=="title"){
-//             orderBy= "name"
-//             return
-//         }else if(type=="characters" && orderBy=="-title") {
-//             orderBy= "-name"
-//             return
-//         }else{
-//             orderBy=$("#orderComic").value
-//         }
-//     }
     $("#typeFilter").onchange = function (e) {
         type = e.target.value;
         episodeFiltersDisabled()
     }
+// //SEARCH BUTTON
 $("#searchButton").onclick = function (e) {
   e.preventDefault();
-//  search = $("#searchInput").value;
   chrName = $("#inputSearch").value;
   type = $("#typeFilter").value;
   chrStatus = $("#statusFilter").value;
