@@ -8,6 +8,9 @@ const urlBase = `https://rickandmortyapi.com/api/`;
 
 let type = "character";
 let search = "";
+let chrStatus = "";
+let chrGender = "";
+let chrName = "";
 let page = 1;
 let urlAPI = `https://rickandmortyapi.com/api/${type}?`;
 let totals = 0;
@@ -17,7 +20,7 @@ let datos = [];
 async function getRAMContent() {
   try {
     //  $("#loader").style.display = "block"
-    urlAPI = `https://rickandmortyapi.com/api/${type}?page=${page}`;
+    urlAPI = `https://rickandmortyapi.com/api/${type}?page=${page}&name=${chrName}&status=${chrStatus}&gender=${chrGender}`;
     const response = await fetch(urlAPI);
     const data = await response.json();
     datos = data.results;
@@ -33,7 +36,19 @@ async function getRAMContent() {
 }
 
 // //FILTERS
-//     function orderByChange () {
+   function episodeFiltersDisabled () {
+        if ($("#typeFilter").value=="episode") {
+    
+             $("#statusFilter").disabled = true
+              $("#genderFilter").disabled = true
+        } else {
+              $("#statusFilter").disabled = false
+              $("#genderFilter").disabled = false
+        }
+
+
+
+
 //         if (type=="characters" && $("#orderComic").value=="title"){
 //             orderBy= "name"
 //             return
@@ -43,7 +58,7 @@ async function getRAMContent() {
 //         }else{
 //             orderBy= $("#orderComic").value
 //         }
-//     }
+    }
 
 //     function TypeChange () {
 //         if (type=="characters" && orderBy=="title"){
@@ -56,14 +71,19 @@ async function getRAMContent() {
 //             orderBy=$("#orderComic").value
 //         }
 //     }
-
+    $("#typeFilter").onchange = function (e) {
+        type = e.target.value;
+        episodeFiltersDisabled()
+    }
 $("#searchButton").onclick = function (e) {
   e.preventDefault();
-  search = $("#inputSearch").value;
+//  search = $("#searchInput").value;
+  chrName = $("#inputSearch").value;
   type = $("#typeFilter").value;
-
+  chrStatus = $("#statusFilter").value;
+  chrGender = $("#genderFilter").value;
+ 
   getRAMContent();
-  console.log(urlAPI);
 };
 
 // //PAGES BUTTONS
@@ -197,10 +217,7 @@ async function getEpisodeId(id) {
   return episode;
 }
 
-// //RENDERS
-
 // CHARACTERS AND EPISODES RENDER
-
 //PRINTING CHARACTERS
 function renderCharacters() {
   clearTable(".contentCards");
@@ -332,13 +349,11 @@ function printCharacterDescription(data) {
             </div>
         </div>
     </div>
-
 </div>`;
   printCharacterEspisodes(data);
 }
 
 // CHARACTER EPISODES RENDER
-
 function printCharacterEspisodes(data) {
   if (data.episode.length === 0) {
     $(
@@ -365,7 +380,6 @@ function printEpisodeDescription(epsDetails) {
   ]);
   showTab([".descriptionPanel"]);
   clearTable(".descriptionPanel");
-  //for (const episode of epsDetails) {
     $(".descriptionPanel").innerHTML += `
         <div class="bg-app-bg text-white font-inter flex items-center justify-center p-4 md:p-8">
     <div class="bg-panel-bg w-full max-w-5xl rounded-lg shadow-2xl border border-gray-800 overflow-hidden flex flex-col md:flex-row min-h-[500px]">
@@ -425,7 +439,6 @@ function printEpisodeDescription(epsDetails) {
         </div>
             `;
     printEpisodesCharacters(epsDetails.characters);
-  //}
 }
 
 function printEpisodesCharacters(data) {
@@ -435,8 +448,6 @@ function printEpisodesCharacters(data) {
     ).innerHTML += `<p class="font-bold">No results</p>`;
   } else {
     for (const dato of data) {
-      console.log("holi episodiooooo.");
-
       $(".episodesCharactersList").innerHTML += `
                             <div onclick="getCharacterDetails(${dato.id}, true)"
                             class="flex items-center gap-2 bg-panel-bg border border-gray-700 p-1 pr-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all group">
@@ -466,12 +477,10 @@ function goBackMain(params) {
     ".paginationButtons",
     ".searchForm",
   ]);
-  console.log("HOLII QUE PASAA");
   renderCharacters();
 }
 
 const initializeApp = () => {
   getRAMContent();
-  console.log(urlAPI);
 };
 window.addEventListener("load", initializeApp);
