@@ -32,6 +32,15 @@
     <title>RickAndMortySearcher</title>
   </head>
   <body class="bg-app-bg text-white font-inter flex flex-col min-h-screen">
+    <!-- LOADER -->
+    <div id="loader" class="fixed inset-0 bg-gray-900 flex justify-center items-center z-50 hidden">
+      <div class="flex space-x-2">
+        <div class="w-4 h-4 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+        <div class="w-4 h-4 bg-white rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+        <div class="w-4 h-4 bg-gray-400 rounded-full animate-bounce"></div>
+      </div>
+    </div>
+
     <!-- HEADER -->
     <header class="w-full py-6 px-8 flex justify-between items-center">
       <nav class="flex items-center gap-2">

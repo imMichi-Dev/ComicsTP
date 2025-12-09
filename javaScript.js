@@ -17,8 +17,8 @@ let datos = [];
 
 //FETCHING
 async function getRAMContent() {
+  $("#loader").classList.remove("hidden");
   try {
-    //  $("#loader").style.display = "block"
     urlAPI = `https://rickandmortyapi.com/api/${type}?page=${page}&name=${chrName}&status=${chrStatus}&gender=${chrGender}`;
     const response = await fetch(urlAPI);
     const data = await response.json();
@@ -27,28 +27,28 @@ async function getRAMContent() {
     $(".resultCount").textContent = `${totals} Resultados`;
   } catch (error) {
     console.log(error);
-    //         $("#loader").style.display = "none"
-    //         $("#loader").innerText = "Error al cargar datos."
+    $("#loader").classList.add("hidden");
+    $("#loader").innerText = "Error al cargar datos.";
   }
+  $("#loader").classList.add("hidden");
   renderCharacters();
   updatePageNumbers();
 }
 
 // //FILTERS
-   function episodeFiltersDisabled () {
-        if ($("#typeFilter").value=="episode") {
-    
-             $("#statusFilter").disabled = true
-              $("#genderFilter").disabled = true
-        } else {
-              $("#statusFilter").disabled = false
-              $("#genderFilter").disabled = false
-        }
-    }
-    $("#typeFilter").onchange = function (e) {
-        type = e.target.value;
-        episodeFiltersDisabled()
-    }
+function episodeFiltersDisabled() {
+  if ($("#typeFilter").value == "episode") {
+    $("#statusFilter").disabled = true;
+    $("#genderFilter").disabled = true;
+  } else {
+    $("#statusFilter").disabled = false;
+    $("#genderFilter").disabled = false;
+  }
+}
+$("#typeFilter").onchange = function (e) {
+  type = e.target.value;
+  episodeFiltersDisabled();
+};
 // //SEARCH BUTTON
 $("#searchButton").onclick = function (e) {
   e.preventDefault();
@@ -56,10 +56,8 @@ $("#searchButton").onclick = function (e) {
   type = $("#typeFilter").value;
   chrStatus = $("#statusFilter").value;
   chrGender = $("#genderFilter").value;
- 
   getRAMContent();
 };
-
 // //PAGES BUTTONS
 $("#page-prev").onclick = function (e) {
   if (page > 1) {
@@ -74,7 +72,6 @@ $("#page-next").onclick = function (e) {
 function updatePageNumbers() {
   $(".pageNumbers").textContent = `Pág. ${page} de ${Math.ceil(totals / 20)}`;
 }
-
 // //GETTING ID'S
 // //GETTING CHARACTERS ID'S
 async function getCharactersById(id, printDescription = false) {
@@ -96,7 +93,6 @@ async function getCharactersById(id, printDescription = false) {
   }
   return characters;
 }
-
 async function getCharacterDetails(id, printDescription = false) {
   let chrDetails;
   try {
@@ -104,12 +100,11 @@ async function getCharacterDetails(id, printDescription = false) {
     const episodesId = character.episode
       .map((eps) => eps.split("/").pop())
       .join(",");
-
     const episode = await getEpisodeId(episodesId);
-    chrDetails= {
+    chrDetails = {
       ...character,
       episode,
-    }
+    };
     if (printDescription) {
       printCharacterDescription(chrDetails);
     }
@@ -118,7 +113,6 @@ async function getCharacterDetails(id, printDescription = false) {
   }
   return chrDetails;
 }
-
 async function getCharacterId(id, printDescription = false) {
   let character;
   try {
@@ -131,7 +125,6 @@ async function getCharacterId(id, printDescription = false) {
   }
   return character;
 }
-
 // //GETTING CHARACTERS ID'S
 async function getEpisodesById(id, printDescription = false) {
   let episodes = [];
@@ -140,7 +133,6 @@ async function getEpisodesById(id, printDescription = false) {
       `https://rickandmortyapi.com/api/episode/[${id}]`
     );
     const data = await response.json();
-
     for (const eps of data) {
       const charactersId = eps.characters
         .map((chr) => chr.split("/").pop())
@@ -156,7 +148,6 @@ async function getEpisodesById(id, printDescription = false) {
   }
   return episodes;
 }
-
 async function getEpisodeDetails(id, printDescription = false) {
   let epsDetails;
   try {
@@ -165,10 +156,10 @@ async function getEpisodeDetails(id, printDescription = false) {
       .map((eps) => eps.split("/").pop())
       .join(",");
     const characters = await getCharactersById(charactersId);
-    epsDetails= {
+    epsDetails = {
       ...episode,
       characters,
-    }
+    };
     if (printDescription) {
       printEpisodeDescription(epsDetails);
     }
@@ -177,7 +168,6 @@ async function getEpisodeDetails(id, printDescription = false) {
   }
   return epsDetails;
 }
-
 async function getEpisodeId(id) {
   let episode;
   try {
@@ -190,7 +180,6 @@ async function getEpisodeId(id) {
   }
   return episode;
 }
-
 // CHARACTERS AND EPISODES RENDER
 //PRINTING CHARACTERS
 function renderCharacters() {
@@ -239,7 +228,6 @@ function renderCharacters() {
     }
   });
 }
-
 // CHARACTER DESCRIPTION RENDERS
 function printCharacterDescription(data) {
   hideTab([
@@ -326,7 +314,6 @@ function printCharacterDescription(data) {
 </div>`;
   printCharacterEspisodes(data);
 }
-
 // CHARACTER EPISODES RENDER
 function printCharacterEspisodes(data) {
   if (data.episode.length === 0) {
@@ -343,7 +330,6 @@ function printCharacterEspisodes(data) {
     }
   }
 }
-
 // EPISODES DESCRIPTION RENDERS
 function printEpisodeDescription(epsDetails) {
   hideTab([
@@ -354,7 +340,7 @@ function printEpisodeDescription(epsDetails) {
   ]);
   showTab([".descriptionPanel"]);
   clearTable(".descriptionPanel");
-    $(".descriptionPanel").innerHTML += `
+  $(".descriptionPanel").innerHTML += `
         <div class="bg-app-bg text-white font-inter flex items-center justify-center p-4 md:p-8">
     <div class="bg-panel-bg w-full max-w-5xl rounded-lg shadow-2xl border border-gray-800 overflow-hidden flex flex-col md:flex-row min-h-[500px]">
         <div class="w-full md:w-5/12 relative group h-64 md:h-auto overflow-hidden bg-card-bg flex flex-col items-center justify-center border-r border-gray-800">
@@ -412,9 +398,8 @@ function printEpisodeDescription(epsDetails) {
   </div>
         </div>
             `;
-    printEpisodesCharacters(epsDetails.characters);
+  printEpisodesCharacters(epsDetails.characters);
 }
-
 function printEpisodesCharacters(data) {
   if (data.length === 0) {
     $(
@@ -431,7 +416,6 @@ function printEpisodesCharacters(data) {
     }
   }
 }
-
 // TABS VISUALIZATION
 const hideTab = (selectors) => {
   for (const selector of selectors) {
@@ -453,7 +437,6 @@ function goBackMain(params) {
   ]);
   renderCharacters();
 }
-
 const initializeApp = () => {
   getRAMContent();
 };
