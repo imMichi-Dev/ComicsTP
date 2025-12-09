@@ -1,4 +1,4 @@
-Buscador de comics
+# Rick y Morty
 Hi there!✨
 This is Michi-Dev 🖤
 
@@ -7,39 +7,40 @@ This is Michi-Dev 🖤
 🌙 MidnightLover
 🐱 crazyCatLady
 
-Introduccion: 🧜‍♀️
+## Introduccion: 🎆
 
-Proyecto generador de memes propuesto por Ada. Creación de una aplicación con la que podrás manipular el texto y la imagen de tu meme y usando JavaScript para modificar dinámicamente su contenido y sus propiedades. Cuando quedes conforme, podrás descargar tu meme para usarlo o compartilo donde quieras.
-Proyecto bujscador de comics propuesto por Ada. Creacion de una aplicación que permita listar cómics y personajes de comics, y obtener información sobre los mismos. Para eso utilicé una API REST con datos reales, realicé consultas a la misma pasándole distintos parámetros que permiten personalizar la búsqueda y mostré los datos obtenidos como respuesta.
+Proyecto de aplicación que permite listar episodios y personajes de Rick y Morty, y obtener información sobre los mismos. Para eso utilize una API REST con datos reales, realize consultas a la misma pasándole distintos parámetros que permitieron personalizar la búsqueda y mostrar los datos obtenidos como respuesta.
 
 En esta primera entrega del proyecto, desarrollé la estructura, los estilos y las secciones principales.
 
-Criterios de aceptacion: 🧠
+## Criterios de aceptacion: 🏆
 
 Los requisitos mínimos tenidos en cuenta en este proyecto:
+ - Respetar el diseño general dado. Pueden modificarse a gusto colores, fondo, fuentes e íconos
+ - Es responsive
+ - Cumple con las funcionalidades principales listadas en la sección siguiente
+ - Hace uso de un preprocesador CSS
+ - Está deployado y ser accesible desde una dirección web
 
-    Respetar el diseño general dado. Pueden modificarse a gusto colores, fondo, fuentes e íconos
-    Es responsive
-    Cumple con las funcionalidades principales listadas en la sección siguiente
-    Hace uso de un preprocesador CSS
-    Está deployado y ser accesible desde una dirección web
-    No se debe trabajar en la rama main. En main sólo van a mergearse las demás ramas, por lo que cada commit de main debería ser el merge de una branch de una funcionalidad terminada
-    Cada funcionalidad que se agregue debe hacerse mediante un PR (Pull Request)
 
-Recursos: 👽
+## Recursos: 🚁
 
-    iconos
-    Fuentes
+API rest [Rick y Morty](https://rickandmortyapi.com/)
 
-La API que vamos a utilizar para este proyecto es la de Marvel Cómics.
+Framework [Tailwind](https://tailwindcss.com/)
 
-Enlace: 🥰
+
+## Enlace: 🚀 
 Dale click al siguiente enlace para acceder [Aquí](https://immichi-dev.github.io/ComicsTP/)
 
-Herramientas usadas: :toolbox:
+## Herramientas usadas: 🔧
+![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+![VisualStudioCode](https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![GIT](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 
-![My Skills](https://skillicons.dev/icons?i=vscode,github,git,html,js,md,tailwind) 
-
-
+	
 
 
