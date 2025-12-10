@@ -31,7 +31,7 @@ Framework [Tailwind](https://tailwindcss.com/)
 
 
 ## Enlace: 🚀 
-Dale click al siguiente enlace para acceder [Aquí]((https://immichi-dev.github.io/RickYmortyTP/))
+Dale click al siguiente enlace para acceder [Aquí](https://immichi-dev.github.io/RickYmortyTP/)
 
 ## Herramientas usadas: 🔧
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
